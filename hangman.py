@@ -6,10 +6,9 @@ import random
 
 # Words are provided in a list, and images copied from book
 
-# list of images used, used sequentially 0 - 6
+# list of images used, sequentially 0 - 6, corresponds to no. of wrong guesses
 
 HANGMANPICS = ['''
-
    +---+
    |   |
        |
@@ -17,7 +16,6 @@ HANGMANPICS = ['''
        |
        |
 =========''', '''
- 
    +---+
    |   |
    O   |
@@ -25,48 +23,44 @@ HANGMANPICS = ['''
        |
        |
 =========''', '''
-
    +---+
    |   |
    O   |
    |   |
- 	   |
        |
- =========''', '''
-
+       |
+=========''', '''
    +---+
    |   |
    O   |
   /|   |
- 	   |
        |
- =========''', '''
-￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼
+       |
+=========''', '''
    +---+
    |   |
    O   |
   /|\  |
- 	   |
        |
- =========''', '''
- 
+       |
+=========''', '''
    +---+
-    |   |
-    O   |
-   /|\  |
-   /    |
-        |
-  =========''', '''
- 
-    +---+
-    |   |
-    O   |
-   /|\  |
-   / \  |
-        |
-  =========''']
+   |   |
+   O   |
+  /|\  |
+  /    |
+       |
+=========''', '''
+   +---+
+   |   |
+   O   |
+  /|\  |
+  / \  |
+       |
+=========''']
   
-# Generate secret word - the split makes it a list where every word is an item
+# secret word is randomly selected from list
+# the split makes "words" a list where every word is an item (easier to manage a long string
 
 words = '''ant baboon badger bat bear beaver 
 camel cat clam cobra cougarcoyote crow deer dog
@@ -78,34 +72,85 @@ spider stork swan tiger toad trout turkey turtle weasel
 whale wolf wombat zebra'''.split()
 
 # Don't hardcode length of list. Select a word from list by randomly choose a key
-def get_random_word(word_list):
-	return word_list[random.randint(0,len(word_list)-1)]
+#
+#def get_random_word(word_list):
+#	return word_list[random.randint(0,len(word_list)-1)]
 	
 # Draw "board" - image, guessed letters and missed letters
 # This function is going to be called everytime the users does something and redrawn
 
-def display_board(HANGMANPICS, missed_letters, correct_letters, secret_word):
-    print HANGMANPICS[len(missed_letters)]
-    print ()
-    print "Missed letter:", end=" "
-    	for letter in missed_letters:
-    		print letter, end = ''
-	print ()
-# board image 0 t/m 6
-# blanks "_ " * len(secret_word)
+#def display_board(HANGMANPICS, missed_letters, correct_letters, secret_word):
+#    print HANGMANPICS[len(missed_letters)]
+#    print ()
+#   print "Missed letter:"
+#    for letter in missed_letters:
+#    	print letter
+#	print ()
+#	blanks = "_" * len(secret_word)
+#	for i in range(len(secret_word)):	
+#		if secret_word[1] in correct_letters:
+#			blanks = blanks[:i] + secret_word[i] + blanks[i+1:]
+#			
+#	for letter in blanks:
+#		printletter
+#	print ()
+#
+## Get user input - check:
+# - is input ONE letter
+# - has letter been guessed before
+# - is letter in word or not
+#def get_guess(already_guessed):
+#	while True:
+#		guess = raw_input("Guess a letter: ").lower()
+#		
+#		if len(guess) != 1:
+ #       	print "Please enter a single letter."
+ #   	elif guess in already_guessed:
+ #      		print "You have already guessed that letter. Choose another letter"
+  #  	elif guess not in 'abcdefghijklmnopqrstuvwxyz':
+   #     	print "Please enter a LETTER."
+   # 	else:
+   #     	return guess
+        	
+#def playAgain():
+#	 play_again = raw_input("Do you want to play again? (yes or no): ").lower()
+ #    return play_again.startswith('y')
+#
+#print "H A N G M A N"
+#missed_letters = ''
+#correct_letters = ''
+#secret_word = get_random_word(words)
+#game_is_done = False
 
-# Get user input
-# letter is in word
-
-# letter is not in word
-# letter has been guessed before
-# input is not a letter
-
-# Player guessed all letters right before time runs out. WIN
-
-# Player hasn't guessed the word and LOSES
-
-# Play again? -> Same loop as dragon game
-
-secret_word = words[random.randint(0,len(words))]
-print secret_word
+#while True:
+#	display_board(HANGMANPICS, missed_letters, correct_letters, secret_word)
+#	guess = get_guess(missed_letters + correct_letters)
+#	
+#	if guess in secret_word:
+#		correct_letters += guess
+#		
+#		found_all_letters = True
+#		for i in range(len(secret_word)):
+#			if secret_word[i] not in correct_letters:
+#				found_all_letters = False
+#				break
+#		if found_all_letters:
+#			print "Yes! The secret word is %s! You have won" %secret_word
+#			game_is_done = True
+#	else:
+#		missed_letters += guess
+#		
+#		if len(missed_letters) == len(HANGMANPICS)-1:
+#			display_board(HANGMANPICS, missed_letters, correct_letters, secret_word)
+#			print "You have run out of guesses!\nAter %s missed guesses \
+#		    and %s correct guesses, the word was \"%s\"" %(len(missed_letters), len(correct_letters), secret_word)
+#		    game_is_done = True
+#		
+#	if game_is_done:
+#		if play_again():
+#			missed_letters = ''
+#			correct_letters = ''
+#			game_is_done = False
+#			secret_word = get_random_word(words)
+#		else:
+#			break
