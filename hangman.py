@@ -73,56 +73,59 @@ whale wolf wombat zebra'''.split()
 
 # Don't hardcode length of list. Select a word from list by randomly choose a key
 #
-#def get_random_word(word_list):
-#	return word_list[random.randint(0,len(word_list)-1)]
+def get_random_word(word_list):
+	return word_list[random.randint(0,len(word_list)-1)]
 	
 # Draw "board" - image, guessed letters and missed letters
 # This function is going to be called everytime the users does something and redrawn
 
-#def display_board(HANGMANPICS, missed_letters, correct_letters, secret_word):
-#    print HANGMANPICS[len(missed_letters)]
-#    print ()
-#   print "Missed letter:"
-#    for letter in missed_letters:
-#    	print letter
-#	print ()
-#	blanks = "_" * len(secret_word)
-#	for i in range(len(secret_word)):	
-#		if secret_word[1] in correct_letters:
+def display_board(HANGMANPICS, missed_letters, correct_letters, secret_word):
+    print HANGMANPICS[len(missed_letters)]
+    print 
+    print "Missed letter:",
+    for letter in missed_letters:
+    	print letter,
+    print 
+    for i in range(len(secret_word)):
+    	if secret_word[i] in correct_letters:
+    		print secret_word[i],
+    	else:
+    		print "_",
+#   blanks = "_" * len(secret_word)
+#	for i in range(len(secret_word)):		
+#		if secret_word[i] in correct_letters:
 #			blanks = blanks[:i] + secret_word[i] + blanks[i+1:]
-#			
 #	for letter in blanks:
-#		printletter
-#	print ()
+#		print letter,
+#	print 
 #
-## Get user input - check:
+# Get user input - check:
 # - is input ONE letter
 # - has letter been guessed before
 # - is letter in word or not
-#def get_guess(already_guessed):
-#	while True:
-#		guess = raw_input("Guess a letter: ").lower()
-#		
-#		if len(guess) != 1:
- #       	print "Please enter a single letter."
- #   	elif guess in already_guessed:
- #      		print "You have already guessed that letter. Choose another letter"
-  #  	elif guess not in 'abcdefghijklmnopqrstuvwxyz':
-   #     	print "Please enter a LETTER."
-   # 	else:
-   #     	return guess
+def get_guess(already_guessed):
+	guess = raw_input("Guess a letter: ")
+    if len(guess) != 1:
+		print "Please enter a single letter."
+	#elif guess in already_guessed:
+  	#	print "You have already guessed that letter. Choose another letter"
+ 	#elif guess not in 'abcdefghijklmnopqrstuvwxyz':
+    #   	print "Please enter a LETTER."
+    else:
+    	return guess
         	
-#def playAgain():
-#	 play_again = raw_input("Do you want to play again? (yes or no): ").lower()
- #    return play_again.startswith('y')
-#
-#print "H A N G M A N"
-#missed_letters = ''
-#correct_letters = ''
-#secret_word = get_random_word(words)
-#game_is_done = False
+def playAgain():
+	 play_again = raw_input("Do you want to play again? (yes or no): ").lower()
+     return play_again.startswith('y')
 
-#while True:
+# start the game
+# print "H A N G M A N"
+# missed_letters = ''
+# correct_letters = ''
+# secret_word = get_random_word(words)
+# game_is_done = False
+
+# while True:
 #	display_board(HANGMANPICS, missed_letters, correct_letters, secret_word)
 #	guess = get_guess(missed_letters + correct_letters)
 #	
