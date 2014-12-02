@@ -1,4 +1,5 @@
 # Introduction
+import random #to choose who starts the game
 
 play_again = True
 
@@ -19,8 +20,7 @@ def print_example_board():
 '''
     print EXAMPLE_BOARD
 
-
-def print_board(v1, v2, v3, v4 ,v5, v6, v7, v8, v9):
+def print_board(list):
     BOARD = '''
    |   |   
  %s | %s | %s
@@ -33,31 +33,79 @@ def print_board(v1, v2, v3, v4 ,v5, v6, v7, v8, v9):
    |   |   
  %s | %s | %s 
    |   | 
-'''%(v1,v2,v3,v4,v5,v6,v7,v8,v9)
+'''%(list[0],list[1],list[2],list[3],list[4],list[5],list[6],list[7],list[8],)
     print BOARD
     
-
-while play_again:
-    print " Welcome to Tic Tac Toe! \n"
-    print_example_board()
-    print_board('X',' ','X','O',' ',' ','0',' ',' ')
-    # Let player choose symbol
-    while True:
-        letter = raw_input("Do you want to play \"X\" or \"O\"? :").upper() 
-        if letter != "X" and letter !="O":
+def who_goes_first():
+    #randomly choose who goes first
+    if random.randint(0,1) == 0:
+    	return 'computer'
+    else:
+        return 'player'
+        
+def get_player_letter():
+  while True:
+        player_letter = raw_input("Do you want to play \"X\" or \"O\"? :").upper() 
+        if player_letter != "X" and player_letter !="O":
         	print "Does not compute, please choose again"
         else:
-            break
-    print "player symbol is %s"%letter
-    play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
+            if player_letter == "X":
+                return ["X", "O"]
+            else: 
+            	return ["O", "X"]
+            	
+def player_move(board, letter):
+    # check if move is legal
+    while True:
+        move = int(raw_input("What move do you want to make? "))
+        if move > 0 and move < 10 and board[move-1] == ' ':
+    	    board[move-1] = letter
+    	    return board
+        else:
+            print "Give me some valid input please!"
+            
+def board_is_full(board):
+	if ' ' not in board:
+		return True
+	else:
+	    return False
 
-    
+while play_again:
+    # Do the setup
+    board = [' ',' ',' ', ' ', ' ', ' ', ' ', ' ', ' ']
+    print "\nWelcome to Tic Tac Toe! \n"
+    print_example_board()
+    # Let player choose symbol
+    player_letter, computer_letter = get_player_letter()
+    print "player is %s, computer is %s"%(player_letter, computer_letter)
+    # Decides who will go first
+    turn = who_goes_first()
+    print "%s will make the first move"%turn
+    # Draw board & get computer and player feedback until
+    #check for win	
+    while True:
+        # check if board is full
+        if board_is_full(board):
+             	print "End of this game"
+             	break
+        else:
+            # player turn   	
+            if turn == 'player':
+                print "Player turn using %s" %player_letter
+                print_board(player_move(board,player_letter))
+                # check for wins
+                #disabled for now, game ends when board is full
+                turn = 'computer'  
+            # computer turn
+            else:
+            # uses user input for computer as well, need to implement heuristics
+                print "computer turn using %s" %computer_letter
+                print_board(player_move(board,computer_letter))
+                # check for wins
+                #disabled for now, game ends when board is full
+                turn = 'player'
 
-    
-
-
-
-#check for win	
+        
 #row_win
 #v1 == v2 == v3 
 #v4 == v5 == v6
@@ -72,5 +120,17 @@ while play_again:
 #diagonal_win
 #v1 == v5 == v9
 #v3 == v5 == v7
+    # Win, lose or draw
+    
+    #play_again
+    play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
+
+    
+
+    
+
+
+
+
 
 
