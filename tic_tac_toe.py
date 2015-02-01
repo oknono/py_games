@@ -75,6 +75,24 @@ def board_is_full(board):
 	else:
 	    return False
 
+  
+def win(board,player):
+    return row_win(board,player) or column_win(board,player) or diagonal_win(board,player)      
+
+def row_win(board,player):
+    return ((board[0] == board[1] == board[2] == player) or 
+       (board[3] == board[4] == board[5] == player) or
+       (board[6] == board[7] == board[8] == player))
+
+def column_win(board,player):
+    return ((board[0] == board[3] == board[6] == player) or 
+       (board[1] == board[4] == board[7] == player) or
+       (board[2] == board[5] == board[8] == player)) 
+        
+def diagonal_win(board,player):
+    return ((board[0] == board[4] == board[8] == player) or 
+       (board[2] == board[4] == board[6] == player))
+
 while play_again:
     # Do the setup
     board = [' ',' ',' ', ' ', ' ', ' ', ' ', ' ', ' ']
@@ -91,7 +109,7 @@ while play_again:
     while True:
         # check if board is full
         if board_is_full(board):
-             	print "End of this game"
+             	print "It's a tie!"
              	break
         else:
             # player turn   	
@@ -99,36 +117,25 @@ while play_again:
                 print "Players turn using %s" %player_letter
                 print_board(player_move(board,player_letter))
                 # check for wins
-                #disabled for now, game ends when board is full
-                turn = 'computer'  
+                if win(board,player_letter):
+                    print "Player wins!"
+                    break
+                else:
+                    turn = 'computer'  
             # computer turn
             else:
             # uses user input for computer as well, need to implement heuristics
                 print "Computers turn using %s" %computer_letter
                 print_board(player_move(board,computer_letter))
                 # check for wins
-                #disabled for now, game ends when board is full
-                turn = 'player'
+                if win(board,computer_letter):
+                    print "Computer wins!"
+                    break
+                else:
+                    turn = 'player'
 
-        
-#row_win
-#v1 == v2 == v3 
-#v4 == v5 == v6
-#v7 == v8 == v9
 
-#column_win
-
-#v1 == v4 == v7
-#v2 == v5 == v8
-#v3 == v6 == v9
-
-#diagonal_win
-#v1 == v5 == v9
-#v3 == v5 == v7
-    # Win, lose or draw
-    
-    #play_again
-    play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
+play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
 
     
 
