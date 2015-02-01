@@ -1,5 +1,4 @@
-# Introduction
-import random #to choose who starts the game
+import random 
 
 play_again = True
 
@@ -39,9 +38,9 @@ def print_board(list):
 def who_goes_first():
     #randomly choose who goes first
     if random.randint(0,1) == 0:
-    	return 'computer'
+    	return 'Computer'
     else:
-        return 'player'
+        return 'Player'
         
 def get_player_letter():
   while True:
@@ -53,16 +52,22 @@ def get_player_letter():
                 return ["X", "O"]
             else: 
             	return ["O", "X"]
-            	
+ # add catch for unsopported input           	
 def player_move(board, letter):
     # check if move is legal
     while True:
-        move = int(raw_input("What move do you want to make? "))
-        if move > 0 and move < 10 and board[move-1] == ' ':
-    	    board[move-1] = letter
-    	    return board
+        move = raw_input("What move do you want to make? ")
+        if move.isdigit():
+                move = int(move)
+                if move > 0 and move < 10 and board[move-1] == ' ':
+    	              board[int(move)-1] = letter
+    	              return board
+    	        elif move < 0 or move >= 10:
+    	            print "That number is off the charts! Try again!"    
+    	        else:
+    	            print "That position is already taken"	            
         else:
-            print "Give me some valid input please!"
+            print "Please enter a number!"
             
 def board_is_full(board):
 	if ' ' not in board:
@@ -77,10 +82,10 @@ while play_again:
     print_example_board()
     # Let player choose symbol
     player_letter, computer_letter = get_player_letter()
-    print "player is %s, computer is %s"%(player_letter, computer_letter)
+    print "Player is %s, computer is %s"%(player_letter, computer_letter)
     # Decides who will go first
     turn = who_goes_first()
-    print "%s will make the first move"%turn
+    print "%s will make the first move" %turn
     # Draw board & get computer and player feedback until
     #check for win	
     while True:
@@ -91,7 +96,7 @@ while play_again:
         else:
             # player turn   	
             if turn == 'player':
-                print "Player turn using %s" %player_letter
+                print "Players turn using %s" %player_letter
                 print_board(player_move(board,player_letter))
                 # check for wins
                 #disabled for now, game ends when board is full
@@ -99,7 +104,7 @@ while play_again:
             # computer turn
             else:
             # uses user input for computer as well, need to implement heuristics
-                print "computer turn using %s" %computer_letter
+                print "Computers turn using %s" %computer_letter
                 print_board(player_move(board,computer_letter))
                 # check for wins
                 #disabled for now, game ends when board is full
