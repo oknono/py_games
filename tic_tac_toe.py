@@ -1,10 +1,13 @@
+# Last updated Sunday Feb 1st 2015
+# Inspired by "Invent Your Own Computer Games with Python, 2nd Edition"
+
 import random 
 
 play_again = True
 
 def print_example_board():
-    print "To play, please enter the number where you want to play. See the illustration below"
-    EXAMPLE_BOARD ='''
+    print "To play, please enter the number of the field. See the illustration below"
+    print '''
    |   |   
  1 | 2 | 3
    |   |   
@@ -17,7 +20,6 @@ def print_example_board():
  7 | 8 | 9 
    |   | 
 '''
-    print EXAMPLE_BOARD
 
 def print_board(list):
     BOARD = '''
@@ -53,15 +55,20 @@ def get_player_letter():
             else: 
             	return ["O", "X"]
 
-def player_move(board, letter):
+def make_move(board, move, letter):
+    board[move] = letter
+    return board
+ 
+def player_move(board):
+    # input is board, return is an index
     # check if move is legal
     while True:
         move = raw_input("What move do you want to make? ")
         if move.isdigit():
                 move = int(move)
-                if move > 0 and move < 10 and board[move-1] == ' ':
-    	              board[int(move)-1] = letter
-    	              return board
+                if move > 0 and move < 10 and is_empty(board, move-1):
+    	              # board[int(move)-1] = letter
+    	              return int(move) - 1
     	        elif move < 0 or move >= 10:
     	            print "That number is off the charts! Try again!"    
     	        else:
@@ -69,22 +76,57 @@ def player_move(board, letter):
         else:
             print "Please enter a number!"
 
-# simplest player. Go through list and place letter at first available spot  
-# ISSUE: Computer keeps making moves if first player     
+def is_empty(board, index):
+   return board[index] == ' ' 
+   
 def computer_move(board,letter): 
-# Random move
+    if letter == 'X':
+        p_letter = 'O'
+    else:
+        p_letter = 'X'
+
+# Check if computer can make winning move
     for number in range(0,9):
-        if board[number] == ' ':
-            board[number] = letter
-            return board           
-             
+        try_board = get_copy_board(board)
+        if is_empty(try_board,number):
+            try_board[number] = letter
+            if win(try_board,letter):
+                return number
+                
 # Check if can block player from winning
+    for number in range(0,9):
+        try_board = get_copy_board(board)
+        if is_empty(try_board,number):
+            try_board[number] = p_letter
+            if win(try_board,p_letter):
+                return number
             
-# Take a corner piece
+# Take a corner piece (first one)
+    for number in [0,2,6,8]:
+        try_board = get_copy_board(board)
+        if is_empty(try_board,number):
+            return number
 
 # Take center
+    if is_empty(board, 5):
+        return 5
 
-# Take side 
+# Take side (first one)
+    for number in [1,3,5,7]:
+        try_board = get_copy_board(board)
+        if is_empty(try_board,number):
+            return number
+
+# Random move
+#   for number in range(0,9):
+#        if board[number] == ' ':
+#            return number     
+
+def get_copy_board(board):
+    copy = []
+    for item in board:
+        copy.append(item)
+    return copy
 
 def board_is_full(board):
 	if ' ' not in board:
@@ -128,18 +170,19 @@ while play_again:
         # check if board is full
         if board_is_full(board):
              	print "It's a tie!"
-             	play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
-
+             	#play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
              	break
         else:
             # player turn   	
             if turn == 'Player':
                 print "Players turn using %s" %player_letter
-                print_board(player_move(board,player_letter))
+                move = player_move(board)
+                make_move(board, move, player_letter)
+                print_board(board)
                 # check for wins
                 if win(board,player_letter):
                     print "Player wins!"
-                    play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
+                    # play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
                     break
                 else:
                     turn = 'Computer'  
@@ -147,18 +190,19 @@ while play_again:
             else:
             # uses user input for computer as well, need to implement heuristics
                 print "Computers turn using %s" %computer_letter            
-                print_board(computer_move(board,computer_letter))
+                move = computer_move(board,computer_letter)
+                make_move(board, move, computer_letter)
+                print_board(board)
                 # check for wins
                 if win(board,computer_letter):
                     print "Computer wins!"
-                    play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
-
+                    #play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
                     break
                 else:
-                    turn = 'player'
+                    turn = 'Player'
 
 
-# play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
+play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
 
     
 
