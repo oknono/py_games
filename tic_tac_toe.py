@@ -52,7 +52,7 @@ def get_player_letter():
                 return ["X", "O"]
             else: 
             	return ["O", "X"]
- # add catch for unsopported input           	
+
 def player_move(board, letter):
     # check if move is legal
     while True:
@@ -68,6 +68,13 @@ def player_move(board, letter):
     	            print "That position is already taken"	            
         else:
             print "Please enter a number!"
+
+# simplest player. Go through list and place letter at first available spot            
+def computer_move(board,letter):
+     for number in range(0,9):
+         if board[number] == ' ':
+             board[number] = letter
+             return board
             
 def board_is_full(board):
 	if ' ' not in board:
@@ -92,6 +99,7 @@ def column_win(board,player):
 def diagonal_win(board,player):
     return ((board[0] == board[4] == board[8] == player) or 
        (board[2] == board[4] == board[6] == player))
+       
 
 while play_again:
     # Do the setup
@@ -110,6 +118,8 @@ while play_again:
         # check if board is full
         if board_is_full(board):
              	print "It's a tie!"
+             	play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
+
              	break
         else:
             # player turn   	
@@ -119,23 +129,26 @@ while play_again:
                 # check for wins
                 if win(board,player_letter):
                     print "Player wins!"
+                    play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
                     break
                 else:
                     turn = 'computer'  
             # computer turn
             else:
             # uses user input for computer as well, need to implement heuristics
-                print "Computers turn using %s" %computer_letter
-                print_board(player_move(board,computer_letter))
+                print "Computers turn using %s" %computer_letter            
+                print_board(computer_move(board,computer_letter))
                 # check for wins
                 if win(board,computer_letter):
                     print "Computer wins!"
+                    play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
+
                     break
                 else:
                     turn = 'player'
 
 
-play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
+# play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
 
     
 
