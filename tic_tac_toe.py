@@ -69,15 +69,15 @@ def player_move(board, letter):
         else:
             print "Please enter a number!"
 
-# simplest player. Go through list and place letter at first available spot            
-def computer_move(board,letter):
-     for number in range(0,9):
-         if board[number] == ' ':
-             board[number] = letter
-             return board
+# simplest player. Go through list and place letter at first available spot  
+# ISSUE: Computer keeps making moves if first player     
+def computer_move(board,letter): 
+# Random move
+    for number in range(0,9):
+        if board[number] == ' ':
+            board[number] = letter
+            return board           
              
-# Check if can make winning move
-
 # Check if can block player from winning
             
 # Take a corner piece
@@ -85,6 +85,7 @@ def computer_move(board,letter):
 # Take center
 
 # Take side 
+
 def board_is_full(board):
 	if ' ' not in board:
 		return True
@@ -132,7 +133,7 @@ while play_again:
              	break
         else:
             # player turn   	
-            if turn == 'player':
+            if turn == 'Player':
                 print "Players turn using %s" %player_letter
                 print_board(player_move(board,player_letter))
                 # check for wins
@@ -141,7 +142,7 @@ while play_again:
                     play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
                     break
                 else:
-                    turn = 'computer'  
+                    turn = 'Computer'  
             # computer turn
             else:
             # uses user input for computer as well, need to implement heuristics
