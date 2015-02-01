@@ -1,10 +1,14 @@
 # Last updated Sunday Feb 1st 2015
-# Inspired by "Invent Your Own Computer Games with Python, 2nd Edition"
+# Inspired by "Invent Your Own Computer Games with Python, 2nd Edition" by Al Sweigart
 
 import random 
 import time
 
 play_again = True
+
+def play_again():
+    play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
+    return play_again
 
 def print_example_board():
     print "To play, please enter the number of the field. See the illustration below"
@@ -170,7 +174,6 @@ while play_again:
         # check if board is full
         if board_is_full(board):
              	print "It's a tie!"
-             	#play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
              	break
         else:
             # player turn   	
@@ -182,28 +185,27 @@ while play_again:
                 # check for wins
                 if win(board,player_letter):
                     print "Player wins!"
-                    # play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
                     break
                 else:
                     turn = 'Computer'  
             # computer turn
             else:
             # uses user input for computer as well, need to implement heuristics
-                time.sleep(3)
-                print "Computers turn"           
+                print "Computers turn..."   
+                time.sleep(1.5)        
                 move = computer_move(board,computer_letter)
                 make_move(board, move, computer_letter)
                 print_board(board)
                 # check for wins
                 if win(board,computer_letter):
                     print "Computer wins!"
-                    #play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
                     break
                 else:
                     turn = 'Player'
+    play_again = play_again()
+        
 
 
-play_again = raw_input("Do you want to play again?(Y)es/(N)o: ").lower().startswith('y')
 
     
 
