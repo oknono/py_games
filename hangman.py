@@ -3,7 +3,7 @@
 #Code for the game "Hangman", inspired by the book "Invent with Python"
 #Some adjustments made in logic, structure and naming conventions
 
-import random #needed to select a random word from a list
+import random
 
 play_again = True
 
@@ -60,8 +60,6 @@ HANGMANPICS = ['''
        |
 =========''']
   
-# secret word is randomly selected from list
-
 words = '''ant baboon badger bat bear beaver camel cat clam cobra cougar coyote 
 crow deer dog donkey duck eagle ferret fox frog goat goose hawk lion lizard llama 
 mole monkey moose mouse mule newt otter owl panda parrot pigeon python rabbit ram 
@@ -74,12 +72,10 @@ def get_random_word(word_list):
 def draw_board(HANGMANPICS, missed_letters, correct_letters, secret_word):
     print HANGMANPICS[len(missed_letters)]
     print 
-    # print wrong guesses 
     print "Missed letter:",
     for letter in missed_letters:
         print letter,
     print 
-    # print secret word with blanks for unguessed letters and letter for correct choices
     for i in range(len(secret_word)):
         if secret_word[i] in correct_letters:
             print secret_word[i],
@@ -99,7 +95,7 @@ def get_guess(string):
         else:
             return guess
     
-# This is the main game. The variable play again is set to True Default
+# This is the main game.
 # At the end of a game a player can choose to play again or stop
 while play_again:
 	# setup of variables and print stuff
@@ -108,9 +104,6 @@ while play_again:
     secret_word = get_random_word(words)
     missed_letters = ''
     correct_letters = ' ' 
-    # print secret_word
-	# This is where computer draws board, and user guesses. Use to breaks to get
-	# out of the while loop. Break when win or lose
     while True:
         draw_board(HANGMANPICS, missed_letters, correct_letters, secret_word)
         guess = get_guess(missed_letters + correct_letters)
