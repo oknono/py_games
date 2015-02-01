@@ -33,7 +33,7 @@ def checkCave(chosenCave):
 
 play_again = True
 
-while play_again == True:
+while play_again:
 
     displayIntro()
     chooseCave()
