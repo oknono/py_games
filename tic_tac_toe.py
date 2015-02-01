@@ -2,6 +2,7 @@
 # Inspired by "Invent Your Own Computer Games with Python, 2nd Edition"
 
 import random 
+import time
 
 play_again = True
 
@@ -37,8 +38,7 @@ def print_board(list):
 '''%(list[0],list[1],list[2],list[3],list[4],list[5],list[6],list[7],list[8],)
     print BOARD
     
-def who_goes_first():
-    #randomly choose who goes first
+def first_move():
     if random.randint(0,1) == 0:
     	return 'Computer'
     else:
@@ -162,7 +162,7 @@ while play_again:
     player_letter, computer_letter = get_player_letter()
     print "Player is %s, computer is %s"%(player_letter, computer_letter)
     # Decides who will go first
-    turn = who_goes_first()
+    turn = first_move()
     print "%s will make the first move" %turn
     # Draw board & get computer and player feedback until
     #check for win	
@@ -175,7 +175,7 @@ while play_again:
         else:
             # player turn   	
             if turn == 'Player':
-                print "Players turn using %s" %player_letter
+                print "Players turn"
                 move = player_move(board)
                 make_move(board, move, player_letter)
                 print_board(board)
@@ -189,7 +189,8 @@ while play_again:
             # computer turn
             else:
             # uses user input for computer as well, need to implement heuristics
-                print "Computers turn using %s" %computer_letter            
+                time.sleep(3)
+                print "Computers turn"           
                 move = computer_move(board,computer_letter)
                 make_move(board, move, computer_letter)
                 print_board(board)
