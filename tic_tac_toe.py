@@ -75,7 +75,16 @@ def computer_move(board,letter):
          if board[number] == ' ':
              board[number] = letter
              return board
+             
+# Check if can make winning move
+
+# Check if can block player from winning
             
+# Take a corner piece
+
+# Take center
+
+# Take side 
 def board_is_full(board):
 	if ' ' not in board:
 		return True
