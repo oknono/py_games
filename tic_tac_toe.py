@@ -1,4 +1,3 @@
-# Last updated Sunday Feb 1st 2015
 # Inspired by "Invent Your Own Computer Games with Python, 2nd Edition" by Al Sweigart
 
 import random 
