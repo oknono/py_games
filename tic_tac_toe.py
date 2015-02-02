@@ -1,8 +1,8 @@
 # Inspired by "Invent Your Own Computer Games with Python,
 # 2nd Edition" by Al Sweigart
 
-import random
-import time
+from random import randint
+from time import sleep
 
 play_again = True
 
@@ -13,8 +13,8 @@ def play_again():
 
 
 def print_example_board():
-    print "To play, please enter the number of the field. \
-           See the illustration below"
+    print "To play, please enter the number of the field."
+    print "See the illustration below"
     print '''
    |   |
  1 | 2 | 3
@@ -31,7 +31,7 @@ def print_example_board():
 
 
 def print_board(board):
-    BOARD = '''
+    print '''
    |   |
  %s | %s | %s
    |   |
@@ -45,11 +45,10 @@ def print_board(board):
    |   |
 ''' % (board[0], board[1], board[2], board[3], board[4],
        board[5], board[6], board[7], board[8])
-    print BOARD
 
 
 def first_move():
-    if random.randint(0, 1) == 0:
+    if randint(0, 1) == 0:
         return 'Computer'
     else:
         return 'Player'
@@ -176,9 +175,9 @@ while play_again:
     print "Player is %s, computer is %s" % (player_letter, computer_letter)
     turn = first_move()
     print "Computer will randomly decided who will make the first move"
-    time.sleep(2)
+    sleep(2)
     print "%s will make the first move" % turn
-    time.sleep(2)
+    sleep(2)
 # Draw board & get computer and player feedback until
 # one player wins or there is a tie
     while True:
@@ -201,7 +200,7 @@ while play_again:
             else:
                 # computer turn
                 print "Computers turn..."
-                time.sleep(2)
+                sleep(2)
                 move = computer_move(board, computer_letter)
                 make_move(board, move, computer_letter)
                 print_board(board)
