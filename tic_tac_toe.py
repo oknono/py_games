@@ -5,6 +5,7 @@ from random import randint
 from time import sleep
 
 play_again = True
+computer_thinking = 2
 
 
 def play_again():
@@ -138,10 +139,7 @@ def computer_move(board, letter):
 
 
 def get_copy_board(board):
-    copy = []
-    for item in board:
-        copy.append(item)
-    return copy
+    return list(board)
 
 
 def win(board, player):
@@ -175,9 +173,9 @@ while play_again:
     print "Player is %s, computer is %s" % (player_letter, computer_letter)
     turn = first_move()
     print "Computer will randomly decided who will make the first move"
-    sleep(2)
+    sleep(computer_thinking)
     print "%s will make the first move" % turn
-    sleep(2)
+    sleep(computer_thinking)
 # Draw board & get computer and player feedback until
 # one player wins or there is a tie
     while True:
@@ -200,7 +198,7 @@ while play_again:
             else:
                 # computer turn
                 print "Computers turn..."
-                sleep(2)
+                sleep(computer_thinking)
                 move = computer_move(board, computer_letter)
                 make_move(board, move, computer_letter)
                 print_board(board)
