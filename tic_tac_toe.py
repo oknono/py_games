@@ -166,7 +166,7 @@ def diagonal_win(board, player):
 # Main part of game
 while play_again:
     # Do the setup - part of every new game
-    board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+    board = [' '] * 9
     print "\nWelcome to Tic Tac Toe! \n"
     print_example_board()
     player_letter, computer_letter = get_player_letter()
