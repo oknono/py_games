@@ -7,12 +7,6 @@ from time import sleep
 play_again = True
 computer_thinking = 2
 
-
-# def play_again():
-#    return raw_input("Do you want to play again?"
-#                     "(Y)es/(N)o: ").lower().startswith('y')
-
-
 def print_example_board():
     print "To play, please enter the number of the field."
     print "See the illustration below"
@@ -58,7 +52,7 @@ def first_move():
 def get_player_letter():
     while True:
         player_letter = raw_input("Do you want to play"
-                                  "\"X\" or \"O\"? :").upper()
+                                  " \"X\" or \"O\"? :").upper()
         if player_letter != 'X' and player_letter != 'O':
             print "Does not compute, please choose again"
         else:
@@ -168,11 +162,13 @@ while play_again:
     # Do the setup - part of every new game
     board = [' '] * 9
     print "\nWelcome to Tic Tac Toe! \n"
-    print_example_board()
     player_letter, computer_letter = get_player_letter()
     print "Player is %s, computer is %s" % (player_letter, computer_letter)
+    print ("\n")
     turn = first_move()
-    print "Computer will randomly decided who will make the first move"
+    print_example_board()
+    print ("\n")
+    print "Computer will randomly decided who will make the first move..."
     sleep(computer_thinking)
     print "%s will make the first move" % turn
     sleep(computer_thinking)
