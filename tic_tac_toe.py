@@ -165,11 +165,11 @@ while play_again:
     player_letter, computer_letter = get_player_letter()
     print "Player is %s, computer is %s" % (player_letter, computer_letter)
     print ("\n")
-    turn = first_move()
     print_example_board()
     print ("\n")
     print "Computer will randomly decided who will make the first move..."
     sleep(computer_thinking)
+    turn = first_move()
     print "%s will make the first move" % turn
     sleep(computer_thinking)
 # Draw board & get computer and player feedback until
