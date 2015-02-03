@@ -180,7 +180,6 @@ while play_again:
             print "It's a tie!"
             break
         else:
-            # player turn
             if turn == 'Player':
                 print "Players turn: ",
                 move = player_move(board)
@@ -192,7 +191,6 @@ while play_again:
                 else:
                     turn = 'Computer'
             else:
-                # computer turn
                 print "Computers turn..."
                 sleep(computer_thinking)
                 move = computer_move(board, computer_letter)
