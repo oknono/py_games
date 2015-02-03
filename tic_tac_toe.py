@@ -8,9 +8,9 @@ play_again = True
 computer_thinking = 2
 
 
-def play_again():
-    return raw_input("Do you want to play again?"
-                     "(Y)es/(N)o: ").lower().startswith('y')
+# def play_again():
+#    return raw_input("Do you want to play again?"
+#                     "(Y)es/(N)o: ").lower().startswith('y')
 
 
 def print_example_board():
@@ -208,4 +208,5 @@ while play_again:
                 else:
                     turn = 'Player'
 
-    play_again = play_again()
+    play_again = raw_input("Do you want to play again?"
+                     "(Y)es/(N)o: ").lower().startswith('y')
