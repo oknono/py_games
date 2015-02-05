@@ -7,6 +7,7 @@ from time import sleep
 play_again = True
 computer_thinking = 2
 
+
 def print_example_board():
     print "To play, please enter the number of the field."
     print "See the illustration below"
@@ -98,38 +99,55 @@ def computer_move(board, letter):
         p_letter = 'O'
     else:
         p_letter = 'X'
+    return win_move(board, letter) or block_move(board, p_letter) or move_corner(board) or move_center(board) or move_side(board)
 
 # 1. Check if computer can make winning move
+def win_move(board, letter):
     for number in range(0, 9):
         try_board = get_copy_board(board)
         if is_empty(try_board, number):
             try_board[number] = letter
             if win(try_board, letter):
                 return number
+    else: 
+        return False
 
 # 2. Check if computer can block player from winning
+def block_move(board, letter):
     for number in range(0, 9):
         try_board = get_copy_board(board)
         if is_empty(try_board, number):
-            try_board[number] = p_letter
-            if win(try_board, p_letter):
+            try_board[number] = letter
+            if win(try_board, letter):
                 return number
+    else: 
+        return False
 
 # 3. Take a corner piece (first one computer finds)
+def move_corner(board):
     for number in [0, 2, 6, 8]:
-        try_board = get_copy_board(board)
-        if is_empty(try_board, number):
+        print number
+        print is_empty(board,number)
+        if is_empty(board, number):
             return number
+    else: 
+        return False
 
 # 4. Take center
+def move_center(board):
     if is_empty(board, 5):
         return 5
+    else: 
+        return False
 
 # 5. Take side (first one computer finds)
+def move_side(board):
     for number in [1, 3, 5, 7]:
         try_board = get_copy_board(board)
         if is_empty(try_board, number):
             return number
+    else: 
+        return False
 
 
 def get_copy_board(board):
@@ -203,4 +221,4 @@ while play_again:
                     turn = 'Player'
 
     play_again = raw_input("Do you want to play again?"
-                     "(Y)es/(N)o: ").lower().startswith('y')
+                           "(Y)es/(N)o: ").lower().startswith('y')
