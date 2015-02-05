@@ -1,3 +1,105 @@
+# Inspired by "Invent Your Own Computer Games with Python
+# 2nd Edition" by Al Sweigart
+
+from random import randint
+from time import sleep
+
+class Board(object):
+#A Tic-Tac-Toe Board
+    def __init__(self):
+        # create a list like this ' ' * 9
+        self.board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+
+    def print_board(self):
+        # Make this function shorter
+        print  '''
+   |   |
+ %s | %s | %s
+   |   |
+-----------
+   |   |
+ %s | %s | %s
+   |   |
+-----------
+   |   |
+ %s | %s | %s
+   |   |
+''' % (self.board[0], self.board[1], self.board[2], self.board[3], self.board[4],
+       self.board[5], self.board[6], self.board[7], self.board[8])
+
+    def make_move(self, move, letter):
+         self.board[move] = letter
+         return self.board
+
+
+    def is_empty(self, index):
+        return self.board[index] == ' '
+
+
+    def is_full(board):
+        #make this function shorter
+        if ' ' not in board:
+            return True
+        else:
+            return False
+
+
+    # this function will be redundant - we can make a new board object to try move
+    def get_copy_board(self):
+        return list(self.board)
+
+
+    def win(self, player):
+        return (row_win(self, player) or column_win(self, player) or
+                diagonal_win(self, player))
+
+    # put indexes in vars? row var/columnvar/diag var. Add corner var and side var
+    def row_win(self, player):
+        return ((self.board[0] == self.board[1] == self.board[2] == player) or
+                (self.board[3] == self.board[4] == self.board[5] == player) or
+                (self.board[6] == self.board[7] == self.board[8] == player))
+
+
+    def column_win(self, player):
+        return ((self.board[0] == self.board[3] == self.board[6] == player) or
+                (self.board[1] == self.board[4] == self.board[7] == player) or
+                (self.board[2] == self.board[5] == self.board[8] == player))
+
+
+    def diagonal_win(self, player):
+        return ((self.board[0] == self.board[4] == self.board[8] == player) or
+                (self.board[2] == self.board[4] == self.board[6] == player))
+
+
+class Player(object):
+    
+    def __init__(self):
+        self.letter = get_letter()
+
+    def get_letter():
+        while True:
+            letter = raw_input("Do you want to play"
+                          " \"X\" or \"O\"? : ").upper()
+            if player_letter != 'X' and player_letter != 'O':
+                print "Does not compute, please choose again"
+            else:
+                if player_letter == 'X':
+                    return ['X', 'O']
+                else:  
+                    return ['O', 'X']
+
+Clive = Player()
+print player.get_letter
+
+class AI(object):
+    pass
+
+new_board = Board()
+new_board.make_move(4,'K')
+new_board.print_board()
+
+
+'''
 # Inspired by "Invent Your Own Computer Games with Python,
 # 2nd Edition" by Al Sweigart
 
@@ -12,33 +114,33 @@ def print_example_board():
     print "To play, please enter the number of the field."
     print "See the illustration below"
     print '''
-   |   |
- 1 | 2 | 3
-   |   |
------------
-   |   |
- 4 | 5 | 6
-   |   |
------------
-   |   |
- 7 | 8 | 9
-   |   |
+#   |   |
+# 1 | 2 | 3
+#   |   |
+#-----------
+#   |   |
+# 4 | 5 | 6
+#   |   |
+#-----------
+#   |   |
+# 7 | 8 | 9
+#   |   |
 '''
 
 
 def print_board(board):
     print '''
-   |   |
- %s | %s | %s
-   |   |
------------
-   |   |
- %s | %s | %s
-   |   |
------------
-   |   |
- %s | %s | %s
-   |   |
+#   |   |
+# %s | %s | %s
+#   |   |
+#-----------
+#   |   |
+# %s | %s | %s
+#   |   |
+#-----------
+#   |   |
+# %s | %s | %s
+#   |   |
 ''' % (board[0], board[1], board[2], board[3], board[4],
        board[5], board[6], board[7], board[8])
 
@@ -52,8 +154,9 @@ def first_move():
 
 def get_player_letter():
     while True:
-        player_letter = raw_input("Do you want to play"
-                                  " \"X\" or \"O\"? :").upper()
+        player_letter = raw_input("Do you want to play"'''
+#                                  " \"X\" or \"O\"? :").upper()
+'''
         if player_letter != 'X' and player_letter != 'O':
             print "Does not compute, please choose again"
         else:
@@ -177,47 +280,47 @@ def diagonal_win(board, player):
 # Main part of game
 while play_again:
     # Do the setup - part of every new game
-    board = [' '] * 9
-    print "\nWelcome to Tic Tac Toe! \n"
-    player_letter, computer_letter = get_player_letter()
-    print "Player is %s, computer is %s" % (player_letter, computer_letter)
-    print ("\n")
-    print_example_board()
-    print ("\n")
-    print "Computer will randomly decided who will make the first move..."
-    sleep(computer_thinking)
-    turn = first_move()
-    print "%s will make the first move" % turn
-    sleep(computer_thinking)
+    board = [' '] * 9'''
+#    print "\nWelcome to Tic Tac Toe! \n"
+#    player_letter, computer_letter = get_player_letter()
+#    print "Player is %s, computer is %s" % (player_letter, computer_letter)
+#    print ("\n")
+#    print_example_board()
+#    print ("\n")
+#    print "Computer will randomly decided who will make the first move..."
+#    sleep(computer_thinking)
+#    turn = first_move()
+#    print "%s will make the first move" % turn
+#    sleep(computer_thinking)
 # Draw board & get computer and player feedback until
 # one player wins or there is a tie
-    while True:
-        # check for tie - board is full and no one won
-        if is_full(board):
-            print "It's a tie!"
-            break
-        else:
-            if turn == 'Player':
-                print "Players turn: ",
-                move = player_move(board)
-                make_move(board, move, player_letter)
-                print_board(board)
-                if win(board, player_letter):
-                    print "Player wins!"
-                    break
-                else:
-                    turn = 'Computer'
-            else:
-                print "Computers turn..."
-                sleep(computer_thinking)
-                move = computer_move(board, computer_letter)
-                make_move(board, move, computer_letter)
-                print_board(board)
-                if win(board, computer_letter):
-                    print "Computer wins!"
-                    break
-                else:
-                    turn = 'Player'
-
-    play_again = raw_input("Do you want to play again?"
-                           "(Y)es/(N)o: ").lower().startswith('y')
+#    while True:
+#        # check for tie - board is full and no one won
+#        if is_full(board):
+#            print "It's a tie!"
+#            break
+#        else:
+#            if turn == 'Player':
+#                print "Players turn: ",
+#                move = player_move(board)
+#                make_move(board, move, player_letter)
+#                print_board(board)
+#                if win(board, player_letter):
+#                    print "Player wins!"
+#                    break
+#                else:
+#                    turn = 'Computer'
+#            else:
+#                print "Computers turn..."
+#                sleep(computer_thinking)
+#                move = computer_move(board, computer_letter)
+#                make_move(board, move, computer_letter)
+#                print_board(board)
+#                if win(board, computer_letter):
+#                    print "Computer wins!"
+#                    break
+#                else:
+#                    turn = 'Player'#
+#
+#    play_again = raw_input("Do you want to play again?"
+#                           "(Y)es/(N)o: ").lower().startswith('y')
