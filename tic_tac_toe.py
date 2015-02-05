@@ -143,8 +143,7 @@ def move_center(board):
 # 5. Take side (first one computer finds)
 def move_side(board):
     for number in [1, 3, 5, 7]:
-        try_board = get_copy_board(board)
-        if is_empty(try_board, number):
+        if is_empty(board, number):
             return number
     else: 
         return False
