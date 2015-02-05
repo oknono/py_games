@@ -38,12 +38,8 @@ class Board(object):
 
     def is_full(board):
         #make this function shorter
-        if ' ' not in board:
-            return True
-        else:
-            return False
-
-
+        return ' ' not in board:
+            
     # this function will be redundant - we can make a new board object to try move
     def get_copy_board(self):
         return list(self.board)
