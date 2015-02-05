@@ -36,7 +36,7 @@ class Board(object):
         return self.board[index] == ' '
 
 
-    def is_full(board):
+    def is_full(self):
         #make this function shorter
         return ' ' not in board:
             
