@@ -125,9 +125,10 @@ def win_move(board, letter):
     print "win move"
     for number in range(0, 9):
         try_board = board.get_copy_board()
-        print try_board
+        print try_board.board
         if try_board.is_empty(number):
             try_board.board[number] = letter
+            print try_board.board
             if try_board.win(letter):
                 return number
     else: 
