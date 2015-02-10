@@ -34,7 +34,6 @@ class Board(object):
          self.board[move] = letter
          return self.board
 
-
     def is_empty(self, index):
         return self.board[index] == ' '
 
@@ -45,7 +44,7 @@ class Board(object):
             
     # this function will be redundant - we can make a new board object to try move
     def get_copy_board(self):
-        return copy.copy(self)
+        return copy.deepcopy(self)
 
 
     def win(self, player):
@@ -158,8 +157,8 @@ def move_corner(board):
 # 4. Take center
 def move_center(board):
     print "center move"
-    if board.is_empty(5):
-        return 5
+    if board.is_empty(4):
+        return 4
     else: 
         return False
 
