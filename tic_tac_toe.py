@@ -124,7 +124,7 @@ def win_move(board, letter):
     print "win move"
     for number in range(0, 9):
         try_board = board.get_copy_board()
-        print try_board.board
+        #print try_board.board
         if try_board.is_empty(number):
             try_board.board[number] = letter
             print try_board.board
@@ -140,6 +140,7 @@ def block_move(board, letter):
         try_board = board.get_copy_board()
         if try_board.is_empty(number):
             try_board.board[number] = letter
+            print try_board.board
             if try_board.win(letter):
                 return number
     else: 
@@ -149,6 +150,7 @@ def block_move(board, letter):
 def move_corner(board):
     print "corner move"
     for number in [0, 2, 6, 8]:
+        print "index " + str(number) + " is " + str(board.board[number])
         if board.is_empty(number):
             return number
     else: 
