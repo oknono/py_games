@@ -45,7 +45,7 @@ class Board(object):
             
     # this function will be redundant - we can make a new board object to try move
     def get_copy_board(self):
-        return copy.copy(self.board)
+        return copy.copy(self)
 
 
     def win(self, player):
@@ -122,10 +122,12 @@ def computer_move(board, letter):
 
 # 1. Check if computer can make winning move
 def win_move(board, letter):
+    print "win move"
     for number in range(0, 9):
         try_board = board.get_copy_board()
+        print try_board
         if try_board.is_empty(number):
-            try_board[number] = letter
+            try_board.board[number] = letter
             if try_board.win(letter):
                 return number
     else: 
@@ -133,10 +135,11 @@ def win_move(board, letter):
 
 # 2. Check if computer can block player from winning
 def block_move(board, letter):
+    print "block move"
     for number in range(0, 9):
         try_board = board.get_copy_board()
         if try_board.is_empty(number):
-            try_board[number] = letter
+            try_board.board[number] = letter
             if try_board.win(letter):
                 return number
     else: 
@@ -144,6 +147,7 @@ def block_move(board, letter):
 
 # 3. Take a corner piece (first one computer finds)
 def move_corner(board):
+    print "corner move"
     for number in [0, 2, 6, 8]:
         if board.is_empty(number):
             return number
@@ -152,6 +156,7 @@ def move_corner(board):
 
 # 4. Take center
 def move_center(board):
+    print "center move"
     if board.is_empty(5):
         return 5
     else: 
@@ -159,6 +164,7 @@ def move_center(board):
 
 # 5. Take side (first one computer finds)
 def move_side(board):
+    print "side move"
     for number in [1, 3, 5, 7]:
         if board.is_empty(number):
             return number
@@ -234,7 +240,7 @@ while play_again:
                 sleep(computer_thinking)
                 move = computer_move(new_board, computer_letter)
                 new_board.make_move(move, computer_letter)
-                board.print_board()
+                new_board.print_board()
                 if new_board.win(computer_letter):
                     print "Computer wins!"
                     break
