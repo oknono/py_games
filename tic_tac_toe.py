@@ -127,9 +127,9 @@ def win_move(board, letter):
         #print try_board.board
         if try_board.is_empty(number):
             try_board.board[number] = letter
-            print try_board.board
+            #print try_board.board
             if try_board.win(letter):
-                return number
+                return str(number)
     else: 
         return False
 
@@ -140,9 +140,9 @@ def block_move(board, letter):
         try_board = board.get_copy_board()
         if try_board.is_empty(number):
             try_board.board[number] = letter
-            print try_board.board
+            #print try_board.board
             if try_board.win(letter):
-                return number
+                return str(number)
     else: 
         return False
 
@@ -150,9 +150,9 @@ def block_move(board, letter):
 def move_corner(board):
     print "corner move"
     for number in [0, 2, 6, 8]:
-        print "index " + str(number) + " is " + str(board.board[number])
+        #print "index " + str(number) + " is " + str(board.board[number])
         if board.is_empty(number):
-            return number
+            return str(number)
     else: 
         return False
 
@@ -160,7 +160,7 @@ def move_corner(board):
 def move_center(board):
     print "center move"
     if board.is_empty(4):
-        return 4
+        return str(4)
     else: 
         return False
 
@@ -169,7 +169,7 @@ def move_side(board):
     print "side move"
     for number in [1, 3, 5, 7]:
         if board.is_empty(number):
-            return number
+            return str(number)
     else: 
         return False
 
@@ -240,7 +240,7 @@ while play_again:
             else:
                 print "Computers turn..."
                 sleep(computer_thinking)
-                move = computer_move(new_board, computer_letter)
+                move = int(computer_move(new_board, computer_letter))
                 new_board.make_move(move, computer_letter)
                 new_board.print_board()
                 if new_board.win(computer_letter):
