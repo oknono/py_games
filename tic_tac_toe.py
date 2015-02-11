@@ -10,8 +10,8 @@ class Board(object):
     # Eveything that relates to the board (a list)
     # --> check, update, print and copy
 
-    corners = [0, 2, 6, 8]
-    sides = [1, 3, 5, 7]
+    # corners = [0, 2, 6, 8]
+    # sides = [1, 3, 5, 7]
 
     def __init__(self):
         self.board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
@@ -120,11 +120,13 @@ class AI(object):
         else:
             return False
 
-    # 3. Take a corner piece (first one computer finds)
+    # 3. Take a corner piece (shuffled list of corners)
     def move_corner(self, board):
         print "corner move"
-        for index in board.corners:
-            print "index is" + str(index)
+        corners = [0, 2, 6, 8]
+        shuffle(corners)
+        print corners
+        for index in corners:
             if board.is_empty(index):
                 return str(index)
         else:
@@ -132,17 +134,19 @@ class AI(object):
 
     # 4. Take center
     def move_center(self, board):
-        print "center move"
+        "print center move"
         if board.is_empty(4):
             return str(4)
         else:
             return False
 
-    # 5. Take side (first one computer finds)
+    # 5. Take side (shuffled list of sides)
     def move_side(self, board):
-        print "side move"
-        for index in board.sides:
-            "index is" + str(index)
+        "print side move"
+        sides = [1, 3, 5, 7]
+        shuffle(sides)
+        print sides
+        for index in sides:
             if board.is_empty(index):
                 return str(index)
         else:
@@ -197,7 +201,7 @@ class Game(object):
                                                 self.computer_letter)
 
     def first_move(self):
-        print "Computer will randomly decided who will make the first move..."
+        print "Computer will randomly decide who will make the first move..."
         sleep(AI.computer_thinking)
         if randint(0, 1) == 0:
             print "And the computer will go first"
