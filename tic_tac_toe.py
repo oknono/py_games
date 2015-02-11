@@ -8,9 +8,7 @@ import copy
 # Change things for assigning letters to players
 
 class Board(object):
-#A Tic-Tac-Toe Board
     def __init__(self):
-        # create a list like this ' ' * 9
         self.board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
     def print_board(self):
@@ -39,10 +37,8 @@ class Board(object):
 
 
     def is_full(self):
-        #make this function shorter
         return ' ' not in self.board
             
-    # this function will be redundant - we can make a new board object to try move
     def get_copy_board(self):
         return copy.deepcopy(self)
 
