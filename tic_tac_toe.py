@@ -1,7 +1,7 @@
 # Inspired by "Invent Your Own Computer Games with Python
 # 2nd Edition" by Al Sweigart
 
-from random import randint
+from random import randint, shuffle
 from time import sleep
 import copy
 
@@ -9,6 +9,9 @@ import copy
 class Board(object):
     # Eveything that relates to the board (a list)
     # --> check, update, print and copy
+
+    corners = [0, 2, 6, 8]
+    sides = [1, 3, 5, 7]
 
     def __init__(self):
         self.board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
@@ -95,6 +98,7 @@ class AI(object):
 
     # 1. Check if computer can make winning move
     def win_move(self, board, letter):
+        print "win move"
         for index in range(0, 9):
             try_board = board.get_copy_board()
             if try_board.is_empty(index):
@@ -106,6 +110,7 @@ class AI(object):
 
     # 2. Check if computer can block player from winning
     def block_move(self, board, letter):
+        print "block move"
         for index in range(0, 9):
             try_board = board.get_copy_board()
             if try_board.is_empty(index):
@@ -117,7 +122,9 @@ class AI(object):
 
     # 3. Take a corner piece (first one computer finds)
     def move_corner(self, board):
-        for index in [0, 2, 6, 8]:
+        print "corner move"
+        for index in board.corners:
+            print "index is" + str(index)
             if board.is_empty(index):
                 return str(index)
         else:
@@ -125,6 +132,7 @@ class AI(object):
 
     # 4. Take center
     def move_center(self, board):
+        print "center move"
         if board.is_empty(4):
             return str(4)
         else:
@@ -132,7 +140,9 @@ class AI(object):
 
     # 5. Take side (first one computer finds)
     def move_side(self, board):
-        for index in [1, 3, 5, 7]:
+        print "side move"
+        for index in board.sides:
+            "index is" + str(index)
             if board.is_empty(index):
                 return str(index)
         else:
