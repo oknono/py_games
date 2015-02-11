@@ -184,8 +184,9 @@ class Game(object):
             self.set_letter()
             self.first_move()
             self.play_game(new_board, new_player, new_AI)
-            new_game.play_again = raw_input("Do you want to play again?"
-                                            "(Y)es/(N)o: ").lower().startswith('y')
+            self.again()
+            #new_game.play_again = raw_input("Do you want to play again?"
+            #                                "(Y)es/(N)o: ").lower().startswith('y')
 
     def play_game(self,board,player,AI):
         while True:
@@ -213,15 +214,15 @@ class Game(object):
                         print "Computer wins!"
                         break
                     else:
-                        self.turn = 'Player'#  
+                        self.turn = 'Player'
 
-#    def play_again(self):
-#        self.play_again = raw_input("Do you want to play again?"
-#                           "(Y)es/(N)o: ").lower().startswith('y')
-#        if self.play_again:
-#            print "\n\n"
-#        else:
-#            print "Goodbye!"
+    def again(self):
+        self.play_again = raw_input("Do you want to play again?"
+                           "(Y)es/(N)o: ").lower().startswith('y')
+        if self.play_again:
+            print "\n\TEST\n"
+        else:
+            print "Goodbye!"
 
 new_game = Game()
 new_game.play()
