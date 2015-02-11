@@ -1,7 +1,7 @@
 # Inspired by "Invent Your Own Computer Games with Python
 # 2nd Edition" by Al Sweigart
 
-from random import randint
+from random import randint, shuffle
 from time import sleep
 import copy
 
@@ -9,11 +9,14 @@ import copy
 class Board(object):
     # Eveything that relates to the board (basically a list)
     # check, update, print and copy
+    corners = [0, 2, 6, 8]
+    sides = [1, 3, 5, 7]
 
     def __init__(self):
         self.board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
     def print_board(self):
+        print ""
         print "   |   |   "
         print " %s | %s | %s " % (self.board[0], self.board[1], self.board[2])
         print "   |   |   "
@@ -25,6 +28,7 @@ class Board(object):
         print "   |   |   "
         print " %s | %s | %s " % (self.board[6], self.board[7], self.board[8])
         print "   |   |   "
+        print ""
 
     def make_move(self, move, letter):
         self.board[move] = letter
@@ -115,7 +119,7 @@ class AI(object):
 
     # 3. Take a corner piece (first one computer finds)
     def move_corner(self, board):
-        for index in [0, 2, 6, 8]:
+        for index in board.corners:
             if board.is_empty(index):
                 return str(index)
         else:
@@ -130,7 +134,7 @@ class AI(object):
 
     # 5. Take side (first one computer finds)
     def move_side(self, board):
-        for index in [1, 3, 5, 7]:
+        for index in board.sides:
             if board.is_empty(index):
                 return str(index)
         else:
@@ -146,6 +150,7 @@ class Game(object):
         self.play_again = True
 
     def print_opening(self):
+        print ""
         print "Let's play Tic Tac Toe!"
         print "To play, please enter number 1 - 9 (see the illustration below)"
         print '''
@@ -181,7 +186,7 @@ class Game(object):
                                                 self.computer_letter)
 
     def first_move(self):
-        print "Computer will randomly decided who will make the first move...",
+        print "Computer will randomly decided who will make the first move..."
         sleep(AI.computer_thinking)
         if randint(0, 1) == 0:
             print "And the computer will go first"
@@ -233,7 +238,7 @@ class Game(object):
         self.play_again = raw_input("Do you want to play again?"
                                     "(Y)es/(N)o: ").lower().startswith('y')
         if self.play_again:
-            print "\n\TEST\n"
+            print ""
         else:
             print "Goodbye!"
 
