@@ -7,8 +7,8 @@ import copy
 
 
 class Board(object):
-    # Eveything that relates to the board (basically a list)
-    # check, update, print and copy
+    # Eveything that relates to the board (a list)
+    # --> check, update, print and copy
 
     def __init__(self):
         self.board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
@@ -26,8 +26,8 @@ class Board(object):
         print " %s | %s | %s " % (self.board[6], self.board[7], self.board[8])
         print "   |   |   "
 
-    def make_move(self, move, letter):
-        self.board[move] = letter
+    def make_move(self, index, letter):
+        self.board[index] = letter
         return self.board
 
     def is_empty(self, index):
