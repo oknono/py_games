@@ -12,7 +12,6 @@ class Board(object):
         self.board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
     def print_board(self):
-        # Make this function shorter
         print  '''
    |   |
  %s | %s | %s
@@ -35,13 +34,12 @@ class Board(object):
     def is_empty(self, index):
         return self.board[index] == ' '
 
-
     def is_full(self):
         return ' ' not in self.board
             
+    # this function will be redundant - we can make a new board object to try move
     def get_copy_board(self):
         return copy.deepcopy(self)
-
 
     def win(self, player):
         return ((self.board[0] == self.board[1] == self.board[2] == player) or
@@ -52,24 +50,6 @@ class Board(object):
                 (self.board[2] == self.board[5] == self.board[8] == player) or
                 (self.board[0] == self.board[4] == self.board[8] == player) or
                 (self.board[2] == self.board[4] == self.board[6] == player))
-
-    # put indexes in vars? row var/columnvar/diag var. Add corner var and side var
-#    def row_win(self, player):
-#        return ((self.board[0] == self.board[1] == self.board[2] == player) or
-#                (self.board[3] == self.board[4] == self.board[5] == player) or
-#                (self.board[6] == self.board[7] == self.board[8] == player))
-#
-#
-#    def column_win(self, player):
-#        return ((self.board[0] == self.board[3] == self.board[6] == player) or
-#                (self.board[1] == self.board[4] == self.board[7] == player) or
-#                (self.board[2] == self.board[5] == self.board[8] == player))
-#
-#
-#    def diagonal_win(self, player):
-#        return ((self.board[0] == self.board[4] == self.board[8] == player) or
-#                (self.board[2] == self.board[4] == self.board[6] == player))
-
 
 #class Player(object):
     
@@ -118,27 +98,27 @@ def computer_move(board, letter):
 # 1. Check if computer can make winning move
 def win_move(board, letter):
     print "win move"
-    for number in range(0, 9):
+    for index in range(0, 9):
         try_board = board.get_copy_board()
-        #print try_board.board
-        if try_board.is_empty(number):
-            try_board.board[number] = letter
-            #print try_board.board
+        if try_board.is_empty(index):
+            try_board.make_move(index, letter)
+            #try_board.board[number] = letter
             if try_board.win(letter):
-                return str(number)
+                return str(index)
     else: 
         return False
 
 # 2. Check if computer can block player from winning
 def block_move(board, letter):
     print "block move"
-    for number in range(0, 9):
+    for index in range(0, 9):
         try_board = board.get_copy_board()
-        if try_board.is_empty(number):
-            try_board.board[number] = letter
+        if try_board.is_empty(index):
+            try_board.make_move(index, letter)
+            #try_board.board[number] = letter
             #print try_board.board
             if try_board.win(letter):
-                return str(number)
+                return str(index)
     else: 
         return False
 
