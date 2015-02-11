@@ -14,6 +14,7 @@ class Board(object):
         self.board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
     def print_board(self):
+        print ""
         print "   |   |   "
         print " %s | %s | %s " % (self.board[0], self.board[1], self.board[2])
         print "   |   |   "
@@ -25,6 +26,7 @@ class Board(object):
         print "   |   |   "
         print " %s | %s | %s " % (self.board[6], self.board[7], self.board[8])
         print "   |   |   "
+        print ""
 
     def make_move(self, index, letter):
         self.board[index] = letter
@@ -231,7 +233,7 @@ class Game(object):
                     board.make_move(move, self.computer_letter)
                     board.print_board()
                     if board.win(self.computer_letter):
-                        print "Computer wins!" 
+                        print "Computer wins!"
                         self.ai_score += 1
                         break
                     else:
@@ -247,7 +249,7 @@ class Game(object):
         self.play_again = raw_input("Do you want to play again?"
                                     "(Y)es/(N)o: ").lower().startswith('y')
         if self.play_again:
-            print "\n\n"
+            print ""
         else:
             print "Goodbye!\n"
 
