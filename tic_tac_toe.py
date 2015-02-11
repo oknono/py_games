@@ -5,9 +5,8 @@ from random import randint
 from time import sleep
 import copy
 
-# Change things for assigning letters to players
-
 class Board(object):
+# Eveything that relates to the board - reading, updating, printing, checking
     def __init__(self):
         self.board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
@@ -51,116 +50,94 @@ class Board(object):
                 (self.board[0] == self.board[4] == self.board[8] == player) or
                 (self.board[2] == self.board[4] == self.board[6] == player))
 
-#class Player(object):
+class Player(object):
+# All functions that gets move from player    
     
-#    def __init__(self):
-#       pass
-#       self.letter = ??
-
-def get_letter():
-    while True:
-        letter = raw_input("Do you want to play"
-                           " \"X\" or \"O\"? : ").upper()
-        if letter != 'X' and letter != 'O':
-                print "Does not compute, please choose again"
-        else:
-            if letter == 'X':
-                return ['X', 'O']
-            else:  
-                return ['O', 'X']
-
-
-def player_move(board):
-    while True:
-        move = raw_input("What move do you want to make? ")
-        if move.isdigit():
-            move = int(move)
-            if move > 0 and move < 10 and board.is_empty(move-1):
-                return int(move) - 1
-            elif move < 0 or move >= 10:
-                print "That number is off the charts! Try again!"
+    def player_move(self, board):
+        while True:
+            move = raw_input("What move do you want to make? ")
+            if move.isdigit():
+                move = int(move)
+                if move > 0 and move < 10 and board.is_empty(move-1):
+                    return (move - 1)
+                elif move < 0 or move >= 10:
+                    print "That number is off the charts! Try again!"
+                else:
+                    print "That position is already taken! Try again!"
             else:
-                print "That position is already taken! Try again!"
+                print "Please enter a NUMBER!" 
+
+class AI(object):   
+# All functions that get move from computer
+    computer_thinking = 2
+
+    def computer_move(self, board, letter):
+        if letter == 'X':
+            p_letter = 'O'
         else:
-            print "Please enter a NUMBER!"
+            p_letter = 'X'
+        return self.win_move(board, letter) or self.block_move(board, p_letter) or self.move_corner(board) or self.move_center(board) or self.move_side(board)
 
-# def play_again():
+    # 1. Check if computer can make winning move
+    def win_move(self, board, letter):
+        for index in range(0, 9):
+            try_board = board.get_copy_board()
+            if try_board.is_empty(index):
+                try_board.make_move(index, letter)
+                if try_board.win(letter):
+                    return str(index)
+        else: 
+            return False
 
-# class AI(object):
+    # 2. Check if computer can block player from winning
+    def block_move(self, board, letter):
+        for index in range(0, 9):
+            try_board = board.get_copy_board()
+            if try_board.is_empty(index):
+                try_board.make_move(index, letter)
+                if try_board.win(letter):
+                    return str(index)
+        else: 
+            return False
 
-def computer_move(board, letter):
-    if letter == 'X':
-        p_letter = 'O'
-    else:
-        p_letter = 'X'
-    return win_move(board, letter) or block_move(board, p_letter) or move_corner(board) or move_center(board) or move_side(board)
-
-# 1. Check if computer can make winning move
-def win_move(board, letter):
-    print "win move"
-    for index in range(0, 9):
-        try_board = board.get_copy_board()
-        if try_board.is_empty(index):
-            try_board.make_move(index, letter)
-            #try_board.board[number] = letter
-            if try_board.win(letter):
+    # 3. Take a corner piece (first one computer finds)
+    def move_corner(self, board):
+        for index in [0, 2, 6, 8]:
+            if board.is_empty(index):
                 return str(index)
-    else: 
-        return False
+        else: 
+            return False
 
-# 2. Check if computer can block player from winning
-def block_move(board, letter):
-    print "block move"
-    for index in range(0, 9):
-        try_board = board.get_copy_board()
-        if try_board.is_empty(index):
-            try_board.make_move(index, letter)
-            #try_board.board[number] = letter
-            #print try_board.board
-            if try_board.win(letter):
+    # 4. Take center
+    def move_center(self, board):
+        if board.is_empty(4):
+            return str(4)
+        else: 
+            return False
+
+    # 5. Take side (first one computer finds)
+    def move_side(self, board):
+        for index in [1, 3, 5, 7]:
+            if board.is_empty(index):
                 return str(index)
-    else: 
-        return False
-
-# 3. Take a corner piece (first one computer finds)
-def move_corner(board):
-    print "corner move"
-    for number in [0, 2, 6, 8]:
-        #print "index " + str(number) + " is " + str(board.board[number])
-        if board.is_empty(number):
-            return str(number)
-    else: 
-        return False
-
-# 4. Take center
-def move_center(board):
-    print "center move"
-    if board.is_empty(4):
-        return str(4)
-    else: 
-        return False
-
-# 5. Take side (first one computer finds)
-def move_side(board):
-    print "side move"
-    for number in [1, 3, 5, 7]:
-        if board.is_empty(number):
-            return str(number)
-    else: 
-        return False
+        else: 
+            return False
 
 # class Game():
-#   pass 
+#   All function that not relate to updating board or getting input from player or AI
 
 
-play_again = True
-computer_thinking = 2
+#play_again = True
+#computer_thinking = 2
 
+class Game(object):
 
-def print_example_board():
-    print "To play, please enter the number of the field."
-    print "See the illustration below"
-    print '''
+    def __init__(self):
+        self.play_again = True
+    def print_example_board(self):
+        print "To play, please enter the number of the field."
+        print "See the illustration below"
+        print '''
    |   |
  1 | 2 | 3
    |   |
@@ -174,38 +151,57 @@ def print_example_board():
    |   |
 '''
 
-def first_move():
-    if randint(0, 1) == 0:
-        return 'Computer'
-    else:
-        return 'Player'
+    def first_move(self):
+        if randint(0, 1) == 0:
+            return 'Computer'
+        else:
+            return 'Player'
+
+    def get_letters(self):
+        while True:
+            letter = raw_input("Do you want to play"
+                               " \"X\" or \"O\"? : ").upper()
+            if letter != 'X' and letter != 'O':
+                print "Does not compute, please choose again"
+            else:
+                if letter == 'X':
+                    return ['X', 'O']
+                else:  
+                    return ['O', 'X']
+
+    #def play_again(self):
+    #    self.play_again = raw_input("Do you want to play again?"
+    #                       "(Y)es/(N)o: ").lower().startswith('y')
+    #    return self.play_again
 
 # Main part of game
+
+play_again = True
+
 while play_again:
-    # Do the setup - part of every new game
+    new_game = Game()
     new_board = Board()
+    new_AI = AI()
+    new_player = Player()
     print "\nWelcome to Tic Tac Toe! \n"
-    player_letter, computer_letter = get_letter()
+    player_letter, computer_letter = new_game.get_letters()
     print "Player is %s, computer is %s" % (player_letter, computer_letter)
     print ("\n")
-    print_example_board()
+    new_game.print_example_board()
     print ("\n")
     print "Computer will randomly decided who will make the first move..."
-    sleep(computer_thinking)
-    turn = first_move()
+    sleep(AI.computer_thinking)
+    turn = new_game.first_move()
     print "%s will make the first move" % turn
-    sleep(computer_thinking)
-    #Draw board & get computer and player feedback until
-    #one player wins or there is a tie
+    sleep(AI.computer_thinking)
     while True:
-        # check for tie - board is full and no one won
         if new_board.is_full():
             print "It's a tie!"
             break
         else:
             if turn == 'Player':
                 print "Players turn: ",
-                move = player_move(new_board)
+                move = new_player.player_move(new_board)
                 new_board.make_move(move, player_letter)
                 new_board.print_board()
                 if new_board.win(player_letter):
@@ -215,8 +211,8 @@ while play_again:
                     turn = 'Computer'
             else:
                 print "Computers turn..."
-                sleep(computer_thinking)
-                move = int(computer_move(new_board, computer_letter))
+                sleep(AI.computer_thinking)
+                move = int(new_AI.computer_move(new_board, computer_letter))
                 new_board.make_move(move, computer_letter)
                 new_board.print_board()
                 if new_board.win(computer_letter):
