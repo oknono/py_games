@@ -144,8 +144,12 @@ class Game(object):
         self.computer_letter = None
         self.turn = None
         self.play_again = True
+        self.player_score = 0
+        self.tie_score = 0
+        self.ai_score = 0
 
     def print_opening(self):
+        print ""
         print "Let's play Tic Tac Toe!"
         print "To play, please enter number 1 - 9 (see the illustration below)"
         print '''
@@ -181,7 +185,7 @@ class Game(object):
                                                 self.computer_letter)
 
     def first_move(self):
-        print "Computer will randomly decided who will make the first move...",
+        print "Computer will randomly decided who will make the first move..."
         sleep(AI.computer_thinking)
         if randint(0, 1) == 0:
             print "And the computer will go first"
@@ -199,12 +203,14 @@ class Game(object):
             self.set_letter()
             self.first_move()
             self.play_game(new_board, new_player, new_AI)
+            self.score()
             self.again()
 
     def play_game(self, board, player, AI):
         while True:
             if board.is_full():
                 print "It's a tie!"
+                self.tie_score += 1
                 break
             else:
                 if self.turn == 'Player':
@@ -214,6 +220,7 @@ class Game(object):
                     board.print_board()
                     if board.win(self.player_letter):
                         print "Player wins!"
+                        self.player_score += 1
                         break
                     else:
                         self.turn = 'Computer'
@@ -224,18 +231,25 @@ class Game(object):
                     board.make_move(move, self.computer_letter)
                     board.print_board()
                     if board.win(self.computer_letter):
-                        print "Computer wins!"
+                        print "Computer wins!" 
+                        self.ai_score += 1
                         break
                     else:
                         self.turn = 'Player'
+
+    def score(self):
+        print "The score is..."
+        print "Human: " + str(self.player_score)
+        print "Computer: " + str(self.ai_score)
+        print "Ties: " + str(self.tie_score)
 
     def again(self):
         self.play_again = raw_input("Do you want to play again?"
                                     "(Y)es/(N)o: ").lower().startswith('y')
         if self.play_again:
-            print "\n\TEST\n"
+            print "\n\n"
         else:
-            print "Goodbye!"
+            print "Goodbye!\n"
 
 new_game = Game()
 new_game.play()
