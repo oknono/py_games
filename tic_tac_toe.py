@@ -177,7 +177,17 @@ class Game(object):
         sleep(AI.computer_thinking)
         return self.turn 
 
-    def play(self,board,player,AI):
+    def play(self):
+        while self.play_again:
+            new_board, new_AI, new_player = Board(), AI(), Player()
+            self.print_opening()
+            self.set_letter()
+            self.first_move()
+            self.play_game(new_board, new_player, new_AI)
+            new_game.play_again = raw_input("Do you want to play again?"
+                                            "(Y)es/(N)o: ").lower().startswith('y')
+
+    def play_game(self,board,player,AI):
         while True:
             if board.is_full():
                 print "It's a tie!"
@@ -185,7 +195,7 @@ class Game(object):
             else:
                 if self.turn == 'Player':
                     print "Players turn: ",
-                    move = player.player_move(new_board)
+                    move = player.player_move(board)
                     board.make_move(move, self.player_letter)
                     board.print_board()
                     if board.win(self.player_letter):
@@ -214,40 +224,5 @@ class Game(object):
 #            print "Goodbye!"
 
 new_game = Game()
+new_game.play()
 
-while new_game.play_again:
-   
-    new_board, new_AI, new_player = Board(), AI(), Player()
-    new_game.print_opening()
-    new_game.set_letter()
-    new_game.first_move()
-    new_game.play(new_board, new_player, new_AI)
-#    while True:
-#        if new_board.is_full():
-#            print "It's a tie!"
-#            break
-#        else:
-#            if new_game.turn == 'Player':
-#                print "Players turn: ",
-#                move = new_player.player_move(new_board)
-#                new_board.make_move(move, new_game.player_letter)
-#                new_board.print_board()
-#                if new_board.win(new_game.player_letter):
-#                    print "Player wins!"
-#                    break
-#                else:
-#                    new_game.turn = 'Computer'
-#            else:
-#                print "Computers turn..."
-#                sleep(AI.computer_thinking)
-#                move = int(new_AI.computer_move(new_board, new_game.computer_letter))
-#                new_board.make_move(move, new_game.computer_letter)
-#                new_board.print_board()
-#                if new_board.win(new_game.computer_letter):
-#                    print "Computer wins!"
-#                    break
-#                else:
-#                    new_game.turn = 'Player'#
-
-    new_game.play_again = raw_input("Do you want to play again?"
-                                    "(Y)es/(N)o: ").lower().startswith('y')
