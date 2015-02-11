@@ -40,13 +40,21 @@ class Board(object):
         return copy.deepcopy(self)
 
     def win(self, player):
+        return (self.row_win(player) or self.column_win(player) or
+                self.diagonal_win(player))
+
+    def row_win(self, player):
         return ((self.board[0] == self.board[1] == self.board[2] == player) or
                 (self.board[3] == self.board[4] == self.board[5] == player) or
-                (self.board[6] == self.board[7] == self.board[8] == player) or
-                (self.board[0] == self.board[3] == self.board[6] == player) or
+                (self.board[6] == self.board[7] == self.board[8] == player))
+
+    def column_win(self, player):
+        return ((self.board[0] == self.board[3] == self.board[6] == player) or
                 (self.board[1] == self.board[4] == self.board[7] == player) or
-                (self.board[2] == self.board[5] == self.board[8] == player) or
-                (self.board[0] == self.board[4] == self.board[8] == player) or
+                (self.board[2] == self.board[5] == self.board[8] == player))
+
+    def diagonal_win(self, player):
+        return ((self.board[0] == self.board[4] == self.board[8] == player) or
                 (self.board[2] == self.board[4] == self.board[6] == player))
 
 
