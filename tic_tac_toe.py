@@ -6,7 +6,7 @@ from time import sleep
 import copy
 
 class Board(object):
-# Eveything that relates to the board - reading, updating, printing, checking
+# Eveything that relates to the board (basically a list) - check, update, print and copy
     def __init__(self):
         self.board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
@@ -36,7 +36,6 @@ class Board(object):
     def is_full(self):
         return ' ' not in self.board
             
-    # this function will be redundant - we can make a new board object to try move
     def get_copy_board(self):
         return copy.deepcopy(self)
 
@@ -123,20 +122,17 @@ class AI(object):
         else: 
             return False
 
-# class Game():
-#   All function that not relate to updating board or getting input from player or AI
-
-
-#play_again = True
-#computer_thinking = 2
-
 class Game(object):
 
     def __init__(self):
+        self.player_letter = None
+        self.computer_letter = None
+        self.turn = None
         self.play_again = True
-    def print_example_board(self):
-        print "To play, please enter the number of the field."
-        print "See the illustration below"
+
+    def print_opening(self):
+        print "Let's play Tic Tac Toe!"  
+        print "To play, please enter number 1 - 9 (see the illustration below)"
         print '''
    |   |
  1 | 2 | 3
@@ -150,12 +146,7 @@ class Game(object):
  7 | 8 | 9
    |   |
 '''
-
-    def first_move(self):
-        if randint(0, 1) == 0:
-            return 'Computer'
-        else:
-            return 'Player'
+        print "But first things first..."
 
     def get_letters(self):
         while True:
@@ -169,57 +160,65 @@ class Game(object):
                 else:  
                     return ['O', 'X']
 
-    #def play_again(self):
-    #    self.play_again = raw_input("Do you want to play again?"
-    #                       "(Y)es/(N)o: ").lower().startswith('y')
-    #    return self.play_again
+    def set_letter(self):
+        self.player_letter, self.computer_letter = new_game.get_letters()
+        print "Player is %s, computer is %s" % (self.player_letter, self.computer_letter)
 
-# Main part of game
+    def first_move(self):
+        print "Computer will randomly decided who will make the first move...",
+        sleep(AI.computer_thinking)
+        if randint(0, 1) == 0:
+            print "And the computer will go first"
+            self.turn = 'Computer'
+            
+        else:
+            print "And you get to go first!"
+            self.turn = 'Player'
+        sleep(AI.computer_thinking)
+        return self.turn    
 
-play_again = True
+#    def play_again(self):
+#        self.play_again = raw_input("Do you want to play again?"
+#                           "(Y)es/(N)o: ").lower().startswith('y')
+#        if self.play_again:
+#            print "\n\n"
+#        else:
+#            print "Goodbye!"
 
-while play_again:
-    new_game = Game()
-    new_board = Board()
-    new_AI = AI()
-    new_player = Player()
-    print "\nWelcome to Tic Tac Toe! \n"
-    player_letter, computer_letter = new_game.get_letters()
-    print "Player is %s, computer is %s" % (player_letter, computer_letter)
-    print ("\n")
-    new_game.print_example_board()
-    print ("\n")
-    print "Computer will randomly decided who will make the first move..."
-    sleep(AI.computer_thinking)
-    turn = new_game.first_move()
-    print "%s will make the first move" % turn
-    sleep(AI.computer_thinking)
+new_game = Game()
+
+while new_game.play_again:
+   
+    new_board, new_AI, new_player = Board(), AI(), Player()
+    new_game.print_opening()
+    new_game.set_letter()
+    new_game.first_move()
     while True:
         if new_board.is_full():
             print "It's a tie!"
             break
         else:
-            if turn == 'Player':
+            if new_game.turn == 'Player':
                 print "Players turn: ",
                 move = new_player.player_move(new_board)
-                new_board.make_move(move, player_letter)
+                new_board.make_move(move, new_game.player_letter)
                 new_board.print_board()
-                if new_board.win(player_letter):
+                if new_board.win(new_game.player_letter):
                     print "Player wins!"
                     break
                 else:
-                    turn = 'Computer'
+                    new_game.turn = 'Computer'
             else:
                 print "Computers turn..."
                 sleep(AI.computer_thinking)
-                move = int(new_AI.computer_move(new_board, computer_letter))
-                new_board.make_move(move, computer_letter)
+                move = int(new_AI.computer_move(new_board, new_game.computer_letter))
+                new_board.make_move(move, new_game.computer_letter)
                 new_board.print_board()
-                if new_board.win(computer_letter):
+                if new_board.win(new_game.computer_letter):
                     print "Computer wins!"
                     break
                 else:
-                    turn = 'Player'#
+                    new_game.turn = 'Player'#
 
-    play_again = raw_input("Do you want to play again?"
-                           "(Y)es/(N)o: ").lower().startswith('y')
+    new_game.play_again = raw_input("Do you want to play again?"
+                                    "(Y)es/(N)o: ").lower().startswith('y')
