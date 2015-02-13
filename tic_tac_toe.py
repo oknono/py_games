@@ -214,11 +214,11 @@ class Game(object):
             self.print_opening()
             self.set_letter()
             self.first_move()
-            self.play_game(new_board, new_player, new_AI)
+            self.game_play(new_board, new_player, new_AI)
             self.score()
             self.again()
 
-    def play_game(self, board, player, AI):
+    def game_play(self, board, player, AI):
         while True:
             if board.is_full():
                 print "It's a tie!"
