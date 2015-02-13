@@ -1,5 +1,3 @@
-# Inspired by "Invent Your Own Computer Games with Python
-# 2nd Edition" by Al Sweigart
 
 from random import randint, shuffle
 from time import sleep
@@ -10,11 +8,8 @@ class Board(object):
     # Eveything that relates to the board (a list)
     # --> check, update, print and copy
 
-    # corners = [0, 2, 6, 8]
-    # sides = [1, 3, 5, 7]
-
     def __init__(self):
-        self.board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        self.board = [' '] * 9
 
     def print_board(self):
         print ""
