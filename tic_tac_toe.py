@@ -60,6 +60,7 @@ class Board(object):
 
 class Player(object):
     # Function(s) that get input from player
+    # self.player_letter = None
 
     def player_move(self, board):
         while True:
@@ -78,16 +79,18 @@ class Player(object):
 
 class AI(object):
     # All computer behaviour
+    # self.computer_letter = None
+
 
     computer_thinking = 2
 
-    def computer_move(self, board, computer):
-        if computer == 'X':
-            human = 'O'
+    def computer_move(self, board, computer_letter):
+        if computer_letter == 'X':
+            player_letter = 'O'
         else:
-            human = 'X'
-        return (self.win_move(board, computer) or
-                self.block_move(board, human) or
+            player_letter = 'X'
+        return (self.win_move(board, computer_letter) or
+                self.block_move(board, player_letter) or
                 self.move_corner(board) or
                 self.move_center(board) or
                 self.move_side(board))
