@@ -26,8 +26,8 @@ class Board(object):
         print "   |   |   "
         print ""
 
-    def make_move(self, index, letter):
-        self.board[index] = letter
+    def make_move(self, index, player):
+        self.board[index] = player
         return self.board
 
     def is_empty(self, index):
