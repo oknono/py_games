@@ -1,7 +1,7 @@
 
 from random import randint, shuffle
 from time import sleep
-import copy
+from copy import deepcopy
 
 
 class Board(object):
@@ -37,7 +37,7 @@ class Board(object):
         return ' ' not in self.board
 
     def get_copy_board(self):
-        return copy.deepcopy(self)
+        return deepcopy(self)
 
     def win(self, player):
         return (self.row_win(player) or self.column_win(player) or
