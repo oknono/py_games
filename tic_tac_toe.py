@@ -1,4 +1,5 @@
-
+""""This script starts a game of tic tac toe on a console where a human player
+can play against an AI"""
 from random import randint, shuffle
 from time import sleep
 from copy import deepcopy
@@ -9,11 +10,11 @@ class Board(object):
     i.e create, print, update, copy and check a Board"""
 
     def __init__(self):
-        """initialize a new Board object"""
+        """Initialize a new Board object"""
         self.board = [' '] * 9
 
     def print_board(self):
-        """Prints the current state of a Board"""
+        """Print the current state of a Board"""
         print ""
         print "   |   |   "
         print " %s | %s | %s " % (self.board[0], self.board[1], self.board[2])
@@ -28,9 +29,9 @@ class Board(object):
         print "   |   |   "
         print ""
 
-    def make_move(self, index, player):
-        """Given a token and an index, update a Board with token at this index"""
-        self.board[index] = player
+    def make_move(self, index, token):
+        """return an Board updated with given token at given index"""
+        self.board[index] = token
         return self.board
 
     def get_copy_board(self):
@@ -45,61 +46,60 @@ class Board(object):
         """Given a board, return if any moves can still be made"""
         return ' ' not in self.board
 
-    def win(self, player):
+    def win(self, token):
         """Given a board and token, return if this token wins a game"""
-        return (self.row_win(player) or self.column_win(player) or
-                self.diagonal_win(player))
+        return (self.row_win(token) or self.column_win(token) or
+                self.diagonal_win(token))
 
-    def row_win(self, player):
+    def row_win(self, token):
         """Given a board and a token, return if there is a win on a row"""
-        return ((self.board[0] == self.board[1] == self.board[2] == player) or
-                (self.board[3] == self.board[4] == self.board[5] == player) or
-                (self.board[6] == self.board[7] == self.board[8] == player))
+        return ((self.board[0] == self.board[1] == self.board[2] == token) or
+                (self.board[3] == self.board[4] == self.board[5] == token) or
+                (self.board[6] == self.board[7] == self.board[8] == token))
 
-    def column_win(self, player):
+    def column_win(self, token):
         """Given a board and a token, return if there is a win on a column"""
-        return ((self.board[0] == self.board[3] == self.board[6] == player) or
-                (self.board[1] == self.board[4] == self.board[7] == player) or
-                (self.board[2] == self.board[5] == self.board[8] == player))
+        return ((self.board[0] == self.board[3] == self.board[6] == token) or
+                (self.board[1] == self.board[4] == self.board[7] == token) or
+                (self.board[2] == self.board[5] == self.board[8] == token))
 
-    def diagonal_win(self, player):
+    def diagonal_win(self, token):
         """Given a board and a token, return if there is a win on a diagonal"""
-        return ((self.board[0] == self.board[4] == self.board[8] == player) or
-                (self.board[2] == self.board[4] == self.board[6] == player))
+        return ((self.board[0] == self.board[4] == self.board[8] == token) or
+                (self.board[2] == self.board[4] == self.board[6] == token))
 
 class AI(object):
     """ All Functions that determines the computer move"""
 
-    def computer_move(self, board, computer_letter, player_letter):
-        """ Given a board and player token, returns the best move for computer player"""    
-        return (self.win_move(board, computer_letter) or
-                self.block_move(board, player_letter) or
+    def computer_move(self, board, computer_token, player_token):
+        """ Given a board and player token, returns the best move for computer player"""
+        return (self.win_move(board, computer_token) or
+                self.block_move(board, player_token) or
                 self.move_corner(board) or
                 self.move_center(board) or
                 self.move_side(board))
 
     @staticmethod
-    def win_move(board, letter):
+    def win_move(board, token):
         """Checks if computer can make winning move. Return integer or False"""
         for index in range(0, 9):
             try_board = board.get_copy_board()
             if try_board.is_empty(index):
-                try_board.make_move(index, letter)
-                if try_board.win(letter):
+                try_board.make_move(index, token)
+                if try_board.win(token):
                     return str(index)
 
-    # 2. Check if computer can block player from winning
     @staticmethod
-    def block_move(board, letter):
-        """Checks if computer can block the human player from making a winning move. Return integer or False"""
+    def block_move(board, token):
+        """Checks if computer can block the human player from making a winning move.
+        Return integer or False"""
         for index in range(0, 9):
             try_board = board.get_copy_board()
             if try_board.is_empty(index):
-                try_board.make_move(index, letter)
-                if try_board.win(letter):
+                try_board.make_move(index, token)
+                if try_board.win(token):
                     return str(index)
 
-    # 3. Take a corner piece (shuffled list of corners)
     @staticmethod
     def move_corner(board):
         """Checks if computer can make a move in a corner, picked randomly from the corners"""
@@ -109,14 +109,12 @@ class AI(object):
             if board.is_empty(index):
                 return str(index)
 
-    # 4. Take center
     @staticmethod
     def move_center(board):
         """Checks if computer can make move in the center of board, returns center or False"""
         if board.is_empty(4):
             return str(4)
 
-    # 5. Take side (shuffled list of sides)
     @staticmethod
     def move_side(board):
         """Checks if computer can make a move in a corner, picked randomly from the corners"""
@@ -133,8 +131,8 @@ class Game(object):
 
     def __init__(self):
         """Initialize a new Game object"""
-        self.player_letter = None
-        self.computer_letter = None
+        self.player_token = None
+        self.computer_token = None
         self.turn = None
         self.play_again = True
         self.player_score = 0
@@ -161,22 +159,22 @@ class Game(object):
 '''
         print "But first things first..."
 
-    def set_letter(self):
+    def set_token(self):
         """Set the tokens for computer player and human player"""
-        self.player_letter, self.computer_letter = self.get_letters()
-        print "Player is %s, computer is %s" % (self.player_letter,
-                                                self.computer_letter)
+        self.player_token, self.computer_token = self.get_tokens()
+        print "Player is %s, computer is %s" % (self.player_token,
+                                                self.computer_token)
 
     @staticmethod
-    def get_letters():
+    def get_tokens():
         """Ask players what token (s)he wants to use. Return computer token and player token"""
         while True:
-            letter = raw_input("Do you want to play"
+            token = raw_input("Do you want to play"
                                " \"X\" or \"O\"? : ").upper()
-            if letter != 'X' and letter != 'O':
+            if token != 'X' and token != 'O':
                 print "Does not compute, please choose again"
             else:
-                if letter == 'X':
+                if token == 'X':
                     return ['X', 'O']
                 else:
                     return ['O', 'X']
@@ -198,7 +196,7 @@ class Game(object):
         while self.play_again:
             ttt_board, computer = Board(), AI()
             self.print_opening()
-            self.set_letter()
+            self.set_token()
             self.first_move()
             self.game_play(ttt_board, computer)
             self.score()
@@ -215,9 +213,9 @@ class Game(object):
                 if self.turn == 'Player':
                     print "Players turn: ",
                     move = self.player_move(board)
-                    board.make_move(move, self.player_letter)
+                    board.make_move(move, self.player_token)
                     board.print_board()
-                    if board.win(self.player_letter):
+                    if board.win(self.player_token):
                         print "Player wins!"
                         self.player_score += 1
                         break
@@ -226,11 +224,11 @@ class Game(object):
                 else:
                     print "Computers turn..."
                     sleep(Game.computer_thinking)
-                    move = int(computer.computer_move(board, self.computer_letter, \
-                               self.player_letter))
-                    board.make_move(move, self.computer_letter)
+                    move = int(computer.computer_move(board, self.computer_token, \
+                               self.player_token))
+                    board.make_move(move, self.computer_token)
                     board.print_board()
-                    if board.win(self.computer_letter):
+                    if board.win(self.computer_token):
                         print "Computer wins!"
                         self.ai_score += 1
                         break
