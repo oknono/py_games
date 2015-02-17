@@ -257,5 +257,5 @@ class Game(object):
         else:
             print "Goodbye!\n"
 
-new_game = Game()
-new_game.play()
+ttt = Game()
+ttt.play()
