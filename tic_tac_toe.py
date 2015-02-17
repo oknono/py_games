@@ -30,15 +30,15 @@ class Board(object):
         self.board[index] = player
         return self.board
 
+    def get_copy_board(self):
+        return deepcopy(self)
+
     def is_empty(self, index):
         return self.board[index] == ' '
 
     def is_full(self):
         return ' ' not in self.board
-
-    def get_copy_board(self):
-        return deepcopy(self)
-
+    
     def win(self, player):
         return (self.row_win(player) or self.column_win(player) or
                 self.diagonal_win(player))
