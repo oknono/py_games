@@ -180,6 +180,11 @@ class Game(object):
 '''
         print "But first things first..."
 
+    def set_letter(self):
+        self.player_letter, self.computer_letter = new_game.get_letters()
+        print "Player is %s, computer is %s" % (self.player_letter,
+                                                self.computer_letter)
+
     def get_letters(self):
         while True:
             letter = raw_input("Do you want to play"
@@ -191,11 +196,6 @@ class Game(object):
                     return ['X', 'O']
                 else:
                     return ['O', 'X']
-
-    def set_letter(self):
-        self.player_letter, self.computer_letter = new_game.get_letters()
-        print "Player is %s, computer is %s" % (self.player_letter,
-                                                self.computer_letter)
 
     def first_move(self):
         print "Computer will randomly decide who will make the first move...",
