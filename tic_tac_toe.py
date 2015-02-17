@@ -134,7 +134,7 @@ class Game(object):
         self.player_score = 0
         self.tie_score = 0
         self.ai_score = 0
-        
+
     @staticmethod
     def print_opening():
         print "\nLet's play Tic Tac Toe!\n"
@@ -158,7 +158,7 @@ class Game(object):
         self.player_letter, self.computer_letter = self.get_letters()
         print "Player is %s, computer is %s" % (self.player_letter,
                                                 self.computer_letter)
-    
+
     @staticmethod
     def get_letters():
         while True:
