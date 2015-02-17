@@ -1,5 +1,7 @@
 """"This script starts a game of tic tac toe on a console where a human player
-can play against an AI"""
+can play against an AI. The player can choose a token and the computer will
+decide who will go first. A player can play as many games as (s)he likes. The program 
+will keep score"""
 from random import randint, shuffle
 from time import sleep
 from copy import deepcopy
@@ -30,49 +32,50 @@ class Board(object):
         print ""
 
     def make_move(self, index, token):
-        """return an Board updated with given token at given index"""
+        """Return an Board updated with given token at given index"""
         self.board[index] = token
         return self.board
 
     def get_copy_board(self):
-        """Given a Board, return an exact replica"""
+        """Return a copy of a board"""
         return deepcopy(self)
 
     def is_empty(self, index):
-        """Given a position on a board, return if token can be placed"""
+        """Return Bool indicating if token can be placed at given index"""
         return self.board[index] == ' '
 
     def is_full(self):
-        """Given a board, return if any moves can still be made"""
+        """Return Bool indicating if token can still be placed on board"""
         return ' ' not in self.board
 
     def win(self, token):
-        """Given a board and token, return if this token wins a game"""
+        """Return Bool indicating if there are three similar tokens in a row
+        column or diagonal"""
         return (self.row_win(token) or self.column_win(token) or
                 self.diagonal_win(token))
 
     def row_win(self, token):
-        """Given a board and a token, return if there is a win on a row"""
+        """Return Bool indicating if there are three similar tokens in a row"""
         return ((self.board[0] == self.board[1] == self.board[2] == token) or
                 (self.board[3] == self.board[4] == self.board[5] == token) or
                 (self.board[6] == self.board[7] == self.board[8] == token))
 
     def column_win(self, token):
-        """Given a board and a token, return if there is a win on a column"""
+        """Return Bool indicating if there is are three similar tokens in a column"""
         return ((self.board[0] == self.board[3] == self.board[6] == token) or
                 (self.board[1] == self.board[4] == self.board[7] == token) or
                 (self.board[2] == self.board[5] == self.board[8] == token))
 
     def diagonal_win(self, token):
-        """Given a board and a token, return if there is a win on a diagonal"""
+        """Return Bool indicating if there is are three similar tokens in a diagonal"""
         return ((self.board[0] == self.board[4] == self.board[8] == token) or
                 (self.board[2] == self.board[4] == self.board[6] == token))
 
 class AI(object):
-    """ All Functions that determines the computer move"""
+    """ All Functions that determine the move that will be made by computer """
 
     def computer_move(self, board, computer_token, player_token):
-        """ Given a board and player token, returns the best move for computer player"""
+        """Return a int representing best move for computer """
         return (self.win_move(board, computer_token) or
                 self.block_move(board, player_token) or
                 self.move_corner(board) or
@@ -81,7 +84,7 @@ class AI(object):
 
     @staticmethod
     def win_move(board, token):
-        """Checks if computer can make winning move. Return integer or False"""
+        """Return int if computer can make a winning move"""
         for index in range(0, 9):
             try_board = board.get_copy_board()
             if try_board.is_empty(index):
@@ -91,8 +94,7 @@ class AI(object):
 
     @staticmethod
     def block_move(board, token):
-        """Checks if computer can block the human player from making a winning move.
-        Return integer or False"""
+        """Return int if computer can block other player from winning"""
         for index in range(0, 9):
             try_board = board.get_copy_board()
             if try_board.is_empty(index):
@@ -102,7 +104,7 @@ class AI(object):
 
     @staticmethod
     def move_corner(board):
-        """Checks if computer can make a move in a corner, picked randomly from the corners"""
+        """Return int if there is an empty corner on the board"""
         corners = [0, 2, 6, 8]
         shuffle(corners)
         for index in corners:
@@ -111,13 +113,13 @@ class AI(object):
 
     @staticmethod
     def move_center(board):
-        """Checks if computer can make move in the center of board, returns center or False"""
+        """Return int if center of board is empty"""
         if board.is_empty(4):
             return str(4)
 
     @staticmethod
     def move_side(board):
-        """Checks if computer can make a move in a corner, picked randomly from the corners"""
+        """Return int if there is a side of the board that is empty"""
         sides = [1, 3, 5, 7]
         shuffle(sides)
         for index in sides:
@@ -160,7 +162,7 @@ class Game(object):
         print "But first things first..."
 
     def set_token(self):
-        """Set the tokens for computer player and human player"""
+        """Return tokens for computer and human player"""
         self.player_token, self.computer_token = self.get_tokens()
         print "Player is %s, computer is %s" % (self.player_token,
                                                 self.computer_token)
@@ -180,7 +182,7 @@ class Game(object):
                     return ['O', 'X']
 
     def first_move(self):
-        """Returns the player that will have the first turn"""
+        """Return player that will have the first turn"""
         print "Computer will randomly decide who will make the first move..."
         sleep(Game.computer_thinking)
         if randint(0, 1) == 0:
@@ -252,14 +254,14 @@ class Game(object):
                 print "Please enter a NUMBER!"
 
     def score(self):
-        """print the score of previous and current game"""
+        """Print the current score"""
         print "The score is..."
         print "Human: " + str(self.player_score)
         print "Computer: " + str(self.ai_score)
         print "Ties: " + str(self.tie_score)
 
     def again(self):
-        """Ask player to play again, return boolean"""
+        """Return Bool indicating if player wants to play another game of tic tac toe """
         self.play_again = raw_input("Do you want to play again?"
                                     "(Y)es/(N)o: ").lower().startswith('y')
         if self.play_again:
