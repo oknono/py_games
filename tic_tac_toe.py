@@ -57,26 +57,6 @@ class Board(object):
         return ((self.board[0] == self.board[4] == self.board[8] == player) or
                 (self.board[2] == self.board[4] == self.board[6] == player))
 
-
-class Player(object):
-    # Function that gets input from the player about moves
-
-    @staticmethod
-    def player_move(board):
-        while True:
-            move = raw_input("What move do you want to make? ")
-            if move.isdigit():
-                move = int(move)
-                if move > 0 and move < 10 and board.is_empty(move-1):
-                    return move - 1
-                elif move < 0 or move >= 10:
-                    print "That number is off the charts! Try again!"
-                else:
-                    print "That position is already taken! Try again!"
-            else:
-                print "Please enter a NUMBER!"
-
-
 class AI(object):
     # Functions that determines computer move
 
@@ -203,15 +183,15 @@ class Game(object):
 
     def play(self):
         while self.play_again:
-            new_board, new_AI, new_player = Board(), AI(), Player()
+            new_board, new_AI = Board(), AI()
             self.print_opening()
             self.set_letter()
             self.first_move()
-            self.game_play(new_board, new_player, new_AI)
+            self.game_play(new_board, new_AI)
             self.score()
             self.again()
 
-    def game_play(self, board, player, AI):
+    def game_play(self, board, AI):
         while True:
             if board.is_full():
                 print "It's a tie!"
@@ -220,7 +200,7 @@ class Game(object):
             else:
                 if self.turn == 'Player':
                     print "Players turn: ",
-                    move = player.player_move(board)
+                    move = self.player_move(board)
                     board.make_move(move, self.player_letter)
                     board.print_board()
                     if board.win(self.player_letter):
@@ -242,6 +222,21 @@ class Game(object):
                         break
                     else:
                         self.turn = 'Player'
+
+    @staticmethod
+    def player_move(board):
+        while True:
+            move = raw_input("What move do you want to make? ")
+            if move.isdigit():
+                move = int(move)
+                if move > 0 and move < 10 and board.is_empty(move-1):
+                    return move - 1
+                elif move < 0 or move >= 10:
+                    print "That number is off the charts! Try again!"
+                else:
+                    print "That position is already taken! Try again!"
+            else:
+                print "Please enter a NUMBER!"
 
     def score(self):
         print "The score is..."
