@@ -6,7 +6,7 @@ from copy import deepcopy
 
 class Board(object):
     # Eveything that relates to the board (a list)
-    # --> check, update, print and copy
+    # i.e print, update, copy and check
 
     def __init__(self):
         self.board = [' '] * 9
@@ -59,8 +59,7 @@ class Board(object):
 
 
 class Player(object):
-    # Function(s) that get input from player
-    # self.player_letter = None
+    # Function that gets input from the player about moves
 
     def player_move(self, board):
         while True:
@@ -78,8 +77,7 @@ class Player(object):
 
 
 class AI(object):
-    # All computer behaviour
-    # self.computer_letter = None
+    # Functions that determines computer move
 
     def computer_move(self, board, computer_letter):
         if computer_letter == 'X':
