@@ -79,11 +79,7 @@ class Player(object):
 class AI(object):
     # Functions that determines computer move
 
-    def computer_move(self, board, computer_letter):
-        if computer_letter == 'X':
-            player_letter = 'O'
-        else:
-            player_letter = 'X'
+    def computer_move(self, board, computer_letter, player_letter):
         return (self.win_move(board, computer_letter) or
                 self.block_move(board, player_letter) or
                 self.move_corner(board) or
@@ -238,7 +234,7 @@ class Game(object):
                 else:
                     print "Computers turn..."
                     sleep(Game.computer_thinking)
-                    move = int(AI.computer_move(board, self.computer_letter))
+                    move = int(AI.computer_move(board, self.computer_letter, self.player_letter))
                     board.make_move(move, self.computer_letter)
                     board.print_board()
                     if board.win(self.computer_letter):
