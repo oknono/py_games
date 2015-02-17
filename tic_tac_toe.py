@@ -181,7 +181,7 @@ class Game(object):
         print "But first things first..."
 
     def set_letter(self):
-        self.player_letter, self.computer_letter = new_game.get_letters()
+        self.player_letter, self.computer_letter = self.get_letters()
         print "Player is %s, computer is %s" % (self.player_letter,
                                                 self.computer_letter)
 
