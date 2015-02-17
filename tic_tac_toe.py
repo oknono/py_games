@@ -76,8 +76,6 @@ class AI(object):
                 try_board.make_move(index, letter)
                 if try_board.win(letter):
                     return str(index)
-        else:
-            return False
 
     # 2. Check if computer can block player from winning
     @staticmethod
@@ -88,8 +86,6 @@ class AI(object):
                 try_board.make_move(index, letter)
                 if try_board.win(letter):
                     return str(index)
-        else:
-            return False
 
     # 3. Take a corner piece (shuffled list of corners)
     @staticmethod
@@ -99,28 +95,23 @@ class AI(object):
         for index in corners:
             if board.is_empty(index):
                 return str(index)
-        else:
-            return False
 
     # 4. Take center
     @staticmethod
     def move_center(board):
+        print "center"
         if board.is_empty(4):
             return str(4)
-        else:
-            return False
 
     # 5. Take side (shuffled list of sides)
     @staticmethod
     def move_side(board):
+        print "side"
         sides = [1, 3, 5, 7]
         shuffle(sides)
         for index in sides:
             if board.is_empty(index):
                 return str(index)
-        else:
-            return False
-
 
 class Game(object):
 
