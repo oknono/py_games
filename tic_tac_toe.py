@@ -112,7 +112,6 @@ class AI(object):
     def move_corner(self, board):
         corners = [0, 2, 6, 8]
         shuffle(corners)
-        print corners
         for index in corners:
             if board.is_empty(index):
                 return str(index)
@@ -130,7 +129,6 @@ class AI(object):
     def move_side(self, board):
         sides = [1, 3, 5, 7]
         shuffle(sides)
-        print sides
         for index in sides:
             if board.is_empty(index):
                 return str(index)
