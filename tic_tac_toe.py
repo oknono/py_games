@@ -81,9 +81,6 @@ class AI(object):
     # All computer behaviour
     # self.computer_letter = None
 
-
-    computer_thinking = 2
-
     def computer_move(self, board, computer_letter):
         if computer_letter == 'X':
             player_letter = 'O'
@@ -153,6 +150,8 @@ class AI(object):
 
 
 class Game(object):
+
+    computer_thinking = 2
 
     def __init__(self):
         self.player_letter = None
