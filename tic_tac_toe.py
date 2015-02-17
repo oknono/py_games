@@ -67,7 +67,7 @@ class Player(object):
             if move.isdigit():
                 move = int(move)
                 if move > 0 and move < 10 and board.is_empty(move-1):
-                    return (move - 1)
+                    return move - 1
                 elif move < 0 or move >= 10:
                     print "That number is off the charts! Try again!"
                 else:
