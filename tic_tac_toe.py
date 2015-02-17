@@ -38,7 +38,7 @@ class Board(object):
 
     def is_full(self):
         return ' ' not in self.board
-    
+
     def win(self, player):
         return (self.row_win(player) or self.column_win(player) or
                 self.diagonal_win(player))
@@ -228,7 +228,8 @@ class Game(object):
                 else:
                     print "Computers turn..."
                     sleep(Game.computer_thinking)
-                    move = int(AI.computer_move(board, self.computer_letter, self.player_letter))
+                    move = int(AI.computer_move(board, self.computer_letter,
+                               self.player_letter))
                     board.make_move(move, self.computer_letter)
                     board.print_board()
                     if board.win(self.computer_letter):
