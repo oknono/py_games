@@ -232,7 +232,7 @@ class Game(object):
                 else:
                     print "Computers turn..."
                     sleep(Game.computer_thinking)
-                    move = int(AI.computer_move(board, self.computer_letter,
+                    move = int(AI.computer_move(board, self.computer_letter, \
                                self.player_letter))
                     board.make_move(move, self.computer_letter)
                     board.print_board()
