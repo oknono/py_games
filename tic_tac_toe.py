@@ -88,7 +88,6 @@ class AI(object):
 
     # 1. Check if computer can make winning move
     def win_move(self, board, letter):
-        print "win move"
         for index in range(0, 9):
             try_board = board.get_copy_board()
             if try_board.is_empty(index):
@@ -100,7 +99,6 @@ class AI(object):
 
     # 2. Check if computer can block player from winning
     def block_move(self, board, letter):
-        print "block move"
         for index in range(0, 9):
             try_board = board.get_copy_board()
             if try_board.is_empty(index):
@@ -112,7 +110,6 @@ class AI(object):
 
     # 3. Take a corner piece (shuffled list of corners)
     def move_corner(self, board):
-        print "corner move"
         corners = [0, 2, 6, 8]
         shuffle(corners)
         print corners
@@ -124,7 +121,6 @@ class AI(object):
 
     # 4. Take center
     def move_center(self, board):
-        "print center move"
         if board.is_empty(4):
             return str(4)
         else:
@@ -132,7 +128,6 @@ class AI(object):
 
     # 5. Take side (shuffled list of sides)
     def move_side(self, board):
-        "print side move"
         sides = [1, 3, 5, 7]
         shuffle(sides)
         print sides
