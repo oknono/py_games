@@ -187,15 +187,14 @@ class Game(object):
                     return ['O', 'X']
 
     def first_move(self):
-        print "Computer will randomly decide who will make the first move...",
-        #sleep(computer_thinking)
+        print "Computer will randomly decide who will make the first move..."
+        sleep(Game.computer_thinking)
         if randint(0, 1) == 0:
             print "And the computer will go first"
             self.turn = 'Computer'
         else:
             print "And you get to go first!"
             self.turn = 'Player'
-        #sleep(computer_thinking)
         return self.turn
 
     def play(self):
