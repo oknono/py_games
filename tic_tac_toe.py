@@ -61,7 +61,8 @@ class Board(object):
 class Player(object):
     # Function that gets input from the player about moves
 
-    def player_move(self, board):
+    @staticmethod
+    def player_move(board):
         while True:
             move = raw_input("What move do you want to make? ")
             if move.isdigit():
@@ -87,7 +88,8 @@ class AI(object):
                 self.move_side(board))
 
     # 1. Check if computer can make winning move
-    def win_move(self, board, letter):
+    @staticmethod
+    def win_move(board, letter):
         for index in range(0, 9):
             try_board = board.get_copy_board()
             if try_board.is_empty(index):
@@ -98,7 +100,8 @@ class AI(object):
             return False
 
     # 2. Check if computer can block player from winning
-    def block_move(self, board, letter):
+    @staticmethod
+    def block_move(board, letter):
         for index in range(0, 9):
             try_board = board.get_copy_board()
             if try_board.is_empty(index):
@@ -109,7 +112,8 @@ class AI(object):
             return False
 
     # 3. Take a corner piece (shuffled list of corners)
-    def move_corner(self, board):
+    @staticmethod
+    def move_corner(board):
         corners = [0, 2, 6, 8]
         shuffle(corners)
         for index in corners:
@@ -119,14 +123,16 @@ class AI(object):
             return False
 
     # 4. Take center
-    def move_center(self, board):
+    @staticmethod
+    def move_center(board):
         if board.is_empty(4):
             return str(4)
         else:
             return False
 
     # 5. Take side (shuffled list of sides)
-    def move_side(self, board):
+    @staticmethod
+    def move_side(board):
         sides = [1, 3, 5, 7]
         shuffle(sides)
         for index in sides:
