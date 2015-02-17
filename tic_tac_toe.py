@@ -127,12 +127,12 @@ class AI(object):
                 return str(index)
 
 class Game(object):
-"""Class for creating a game object, with all necessary variables and functions for gameplay"""
+    """Class for creating a game object, with all necessary variables and functions for gameplay"""
 
     computer_thinking = 2
 
     def __init__(self):
-    """Initialize a new Game object"""
+        """Initialize a new Game object"""
         self.player_letter = None
         self.computer_letter = None
         self.turn = None
@@ -197,7 +197,7 @@ class Game(object):
         """This function structures the flow of the game"""
         while self.play_again:
             ttt_board, computer = Board(), AI()
-             self.print_opening()
+            self.print_opening()
             self.set_letter()
             self.first_move()
             self.game_play(ttt_board, computer)
