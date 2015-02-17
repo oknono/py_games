@@ -1,7 +1,7 @@
 """"This script starts a game of tic tac toe on a console where a human player
 can play against an AI. The player can choose a token and the computer will
-decide who will go first. A player can play as many games as (s)he likes. The program 
-will keep score"""
+decide who will go first. A player can play as many games as (s)he likes. The
+program will keep score"""
 from random import randint, shuffle
 from time import sleep
 from copy import deepcopy
@@ -61,15 +61,18 @@ class Board(object):
                 (self.board[6] == self.board[7] == self.board[8] == token))
 
     def column_win(self, token):
-        """Return Bool indicating if there is are three similar tokens in a column"""
+        """Return Bool indicating if there are three similar tokens in a
+        column"""
         return ((self.board[0] == self.board[3] == self.board[6] == token) or
                 (self.board[1] == self.board[4] == self.board[7] == token) or
                 (self.board[2] == self.board[5] == self.board[8] == token))
 
     def diagonal_win(self, token):
-        """Return Bool indicating if there is are three similar tokens in a diagonal"""
+        """Return Bool indicating if there are three similar tokens in a
+        diagonal"""
         return ((self.board[0] == self.board[4] == self.board[8] == token) or
                 (self.board[2] == self.board[4] == self.board[6] == token))
+
 
 class AI(object):
     """ All Functions that determine the move that will be made by computer """
@@ -126,8 +129,10 @@ class AI(object):
             if board.is_empty(index):
                 return str(index)
 
+
 class Game(object):
-    """Class for creating a game object, with all necessary variables and functions for gameplay"""
+    """Class for creating a game object, with all necessary variables
+    and functions for gameplay"""
 
     computer_thinking = 2
 
@@ -162,17 +167,18 @@ class Game(object):
         print "But first things first..."
 
     def set_token(self):
-        """Return tokens for computer and human player"""
+        """Set and print computer and player token"""
         self.player_token, self.computer_token = self.get_tokens()
         print "Player is %s, computer is %s" % (self.player_token,
                                                 self.computer_token)
 
     @staticmethod
     def get_tokens():
-        """Ask players what token (s)he wants to use. Return computer token and player token"""
+        """Ask players what token (s)he wants to use.
+        Return values of computer token and player token"""
         while True:
             token = raw_input("Do you want to play"
-                               " \"X\" or \"O\"? : ").upper()
+                              " \"X\" or \"O\"? : ").upper()
             if token != 'X' and token != 'O':
                 print "Does not compute, please choose again"
             else:
@@ -205,7 +211,8 @@ class Game(object):
             self.again()
 
     def game_play(self, board, computer):
-        """Let player and computer take turns and check for winning or tie condition"""
+        """Let player and computer take turns and check for winning
+        or tie condition"""
         while True:
             if board.is_full():
                 print "It's a tie!"
@@ -226,7 +233,8 @@ class Game(object):
                 else:
                     print "Computers turn..."
                     sleep(Game.computer_thinking)
-                    move = int(computer.computer_move(board, self.computer_token, \
+                    move = int(computer.computer_move(board,
+                               self.computer_token,
                                self.player_token))
                     board.make_move(move, self.computer_token)
                     board.print_board()
@@ -261,7 +269,8 @@ class Game(object):
         print "Ties: " + str(self.tie_score)
 
     def again(self):
-        """Return Bool indicating if player wants to play another game of tic tac toe """
+        """Return Bool indicating if player wants to play another game of
+        tic tac toe """
         self.play_again = raw_input("Do you want to play again?"
                                     "(Y)es/(N)o: ").lower().startswith('y')
         if self.play_again:
