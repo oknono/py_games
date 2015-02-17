@@ -185,15 +185,15 @@ class Game(object):
 
     def play(self):
         while self.play_again:
-            new_board, new_AI = Board(), AI()
+            ttt_board, computer = Board(), AI()
             self.print_opening()
             self.set_letter()
             self.first_move()
-            self.game_play(new_board, new_AI)
+            self.game_play(ttt_board, computer)
             self.score()
             self.again()
 
-    def game_play(self, board, AI):
+    def game_play(self, board, computer):
         while True:
             if board.is_full():
                 print "It's a tie!"
@@ -214,7 +214,7 @@ class Game(object):
                 else:
                     print "Computers turn..."
                     sleep(Game.computer_thinking)
-                    move = int(AI.computer_move(board, self.computer_letter, \
+                    move = int(computer.computer_move(board, self.computer_letter, \
                                self.player_letter))
                     board.make_move(move, self.computer_letter)
                     board.print_board()
