@@ -134,8 +134,9 @@ class Game(object):
         self.player_score = 0
         self.tie_score = 0
         self.ai_score = 0
-
-    def print_opening(self):
+        
+    @staticmethod
+    def print_opening():
         print "\nLet's play Tic Tac Toe!\n"
         print "To play, please enter number 1 - 9 (see the illustration below)"
         print '''
@@ -157,8 +158,9 @@ class Game(object):
         self.player_letter, self.computer_letter = self.get_letters()
         print "Player is %s, computer is %s" % (self.player_letter,
                                                 self.computer_letter)
-
-    def get_letters(self):
+    
+    @staticmethod
+    def get_letters():
         while True:
             letter = raw_input("Do you want to play"
                                " \"X\" or \"O\"? : ").upper()
