@@ -163,8 +163,7 @@ class Game(object):
         self.ai_score = 0
 
     def print_opening(self):
-        print ""
-        print "Let's play Tic Tac Toe!"
+        print "\nLet's play Tic Tac Toe!\n"
         print "To play, please enter number 1 - 9 (see the illustration below)"
         print '''
    |   |
@@ -199,15 +198,15 @@ class Game(object):
                                                 self.computer_letter)
 
     def first_move(self):
-        print "Computer will randomly decide who will make the first move..."
-        sleep(AI.computer_thinking)
+        print "Computer will randomly decide who will make the first move...",
+        #sleep(computer_thinking)
         if randint(0, 1) == 0:
             print "And the computer will go first"
             self.turn = 'Computer'
         else:
             print "And you get to go first!"
             self.turn = 'Player'
-        sleep(AI.computer_thinking)
+        #sleep(computer_thinking)
         return self.turn
 
     def play(self):
