@@ -234,8 +234,8 @@ class Game(object):
                     print "Computers turn..."
                     sleep(Game.computer_thinking)
                     move = int(computer.computer_move(board,
-                               self.computer_token,
-                               self.player_token))
+                                                      self.computer_token,
+                                                      self.player_token))
                     board.make_move(move, self.computer_token)
                     board.print_board()
                     if board.win(self.computer_token):
