@@ -223,15 +223,12 @@ class Game(object):
         if board.is_full():
             print "It's a tie!"
             self.tie_score += 1
-            #break
         elif board.win(self.computer_token):
             print "Computer wins!"
             self.ai_score += 1
-            #break
         elif board.win(self.player_token):
             print "Player wins!"
             self.player_score += 1
-            #break
         else:
             print "ERROR - this should not be printed"
 
