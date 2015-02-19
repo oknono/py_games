@@ -112,7 +112,7 @@ class AI(object):
 
     @staticmethod
     def move_corner(board):
-        """Return a string if there is a valid move in a corner can be made"""
+        """Return a string if a valid move can be made in a corner"""
         corners = [0, 2, 6, 8]
         shuffle(corners)
         for index in corners:
@@ -121,7 +121,7 @@ class AI(object):
 
     @staticmethod
     def move_center(board):
-        """Return a string if a valid move van be made in center of the board"""
+        """Return a string if a valid move can be made in the center of the board"""
         if board.is_valid_move(4):
             return str(4)
 
