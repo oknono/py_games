@@ -157,11 +157,11 @@ class Game(object):
     @staticmethod
     def print_opening():
         """Print an instruction on how to play the game"""
-        print "\nLet's play Tic Tac Toe!\n"
-        print "To play, please enter number 1 - 9 (see the illustration below)"
+        print "\nHey Ho, Come on and let's play Tic Tac Toe!\n"
+        print "To play and have a good time, please enter number 1 - 9"
         example_board = Board([n for n in range(1, 10)])
         example_board.print_board()
-        print "But first things first..."
+        print "There's one thing I need to know..."
 
     def tokens(self):
         """Ask players what token (s)he wants to use.
@@ -170,7 +170,7 @@ class Game(object):
             token = raw_input("Do you want to play"
                               " \"X\" or \"O\"? : ").upper()
             if token != 'X' and token != 'O':
-                print "Does not compute, please choose again"
+                print "That's neither a X or an O, please give it another go!"
             else:
                 if token == 'X':
                     self.player_token, self.computer_token = 'X', 'O'
@@ -202,7 +202,7 @@ class Game(object):
         while not (board.is_full() or board.win(self.computer_token) or
                    board.win(self.player_token)):
             if self.player_turn:
-                print "Players turn: ",
+                print "Players turn...",
                 move = self.player_move(board)
                 board.make_move(move, self.player_token)
                 board.print_board()
@@ -221,7 +221,7 @@ class Game(object):
     def game_end(self, board):
         """Prints end message and updates score"""
         if board.is_full():
-            print "It's a tie!"
+            print "My my my, It's a tie!"
             self.tie_score += 1
         elif board.win(self.computer_token):
             print "Computer wins!"
