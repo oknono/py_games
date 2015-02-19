@@ -198,7 +198,6 @@ class Game(object):
     def first_move(self):
         """Set Boolean that determines if player make first move"""
         print "Computer will randomly decide who will make the first move..."
-        sleep(Game.computer_thinking)
         self.player_turn = randint(0, 1)
 
     def play(self):
