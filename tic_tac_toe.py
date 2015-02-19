@@ -277,7 +277,7 @@ class Game(object):
  
     @staticmethod
     def get_correct_input():
-        """Get input from player and return value is input is an integer and in range"""
+        """Return int, based on input from player and if input is an integer and in range of permitted values"""
         while True:
             answer = raw_input("What move do you want to make? ")
             try:
@@ -289,9 +289,9 @@ class Game(object):
             except Exception:
                 print "Please enter a numerical value"
 
-
     @staticmethod
     def presentation(list):
+        """Print the contents of a list depending on length (1 or >1)"""
         if len(list) > 1:
             print "positions",
             for n in range(len(list)-2):
