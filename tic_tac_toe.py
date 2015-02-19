@@ -11,9 +11,9 @@ class Board(object):
     """" All functions that relate to the Board object
     i.e create, print, update, copy and check a Board"""
 
-    def __init__(self):
+    def __init__(self, board):
         """Initialize a new Board object"""
-        self.board = [' '] * 9
+        self.board = board
 
     def print_board(self):
         """Print the current state of a Board"""
@@ -159,24 +159,13 @@ class Game(object):
         """Print an instruction on how to play the game"""
         print "\nLet's play Tic Tac Toe!\n"
         print "To play, please enter number 1 - 9 (see the illustration below)"
-        print '''
-   |   |
- 1 | 2 | 3
-   |   |
------------
-   |   |
- 4 | 5 | 6
-   |   |
------------
-   |   |
- 7 | 8 | 9
-   |   |
-'''
+        example_board = Board([n for n in range(1, 10)])
+        example_board.print_board()       
         print "But first things first..."
 
     def tokens(self):
         """Ask players what token (s)he wants to use.
-        Return values of computer token and player token"""
+        Set and print values of computer token and player token"""
         while True:
             token = raw_input("Do you want to play"
                               " \"X\" or \"O\"? : ").upper()
@@ -202,7 +191,7 @@ class Game(object):
     def play(self):
         """This function structures the flow of the game"""
         while self.play_again:
-            ttt_board, computer = Board(), AI()
+            ttt_board, computer = Board([' '] * 9), AI()
             self.print_opening()
             self.tokens()
             self.first_move()
