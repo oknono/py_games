@@ -40,7 +40,7 @@ class Board(object):
         """Return a copy of a board"""
         return deepcopy(self)
 
-    def is_empty(self, index):
+    def is_valid_move(self, index):
         """Return Bool indicating if token can be placed at given index"""
         return self.board[index] == ' '
 
@@ -52,7 +52,7 @@ class Board(object):
         """return a list of all available postions on board (1-9)"""
         positions = []
         for n in range(9):
-            if self.is_empty(n):
+            if self.is_valid_move(n):
                 positions.append(n + 1)
         return positions
 
@@ -98,7 +98,7 @@ class AI(object):
         """Return int if computer can make a winning move"""
         for index in range(0, 9):
             try_board = board.get_copy_board()
-            if try_board.is_empty(index):
+            if try_board.is_valid_move(index):
                 try_board.make_move(index, token)
                 if try_board.win(token):
                     return str(index)
@@ -108,33 +108,33 @@ class AI(object):
         """Return int if computer can block other player from winning"""
         for index in range(0, 9):
             try_board = board.get_copy_board()
-            if try_board.is_empty(index):
+            if try_board.is_valid_move(index):
                 try_board.make_move(index, token)
                 if try_board.win(token):
                     return str(index)
 
     @staticmethod
     def move_corner(board):
-        """Return int if there is an empty corner on the board"""
+        """Return int if there is an valid corner on the board"""
         corners = [0, 2, 6, 8]
         shuffle(corners)
         for index in corners:
-            if board.is_empty(index):
+            if board.is_valid_move(index):
                 return str(index)
 
     @staticmethod
     def move_center(board):
-        """Return int if center of board is empty"""
-        if board.is_empty(4):
+        """Return int if center of board is valid"""
+        if board.is_valid_move(4):
             return str(4)
 
     @staticmethod
     def move_side(board):
-        """Return int if there is a side of the board that is empty"""
+        """Return int if there is a side of the board that is valid"""
         sides = [1, 3, 5, 7]
         shuffle(sides)
         for index in sides:
-            if board.is_empty(index):
+            if board.is_valid_move(index):
                 return str(index)
 
 
@@ -259,7 +259,7 @@ class Game(object):
             answer = raw_input("What move do you want to make? ")
             try:
                 move = int(answer) - 1
-                if self.in_range(move) and board.is_empty(move):
+                if self.in_range(move) and board.is_valid_move(move):
                     return move
                 else:
                     self.input_feedback(board)
@@ -286,9 +286,7 @@ class Game(object):
             print "position", open_position[0], "is available"  
         else:
             print "ERROR - No available elements in list"
-
     
-
     def score(self):
         """Print the current score"""
         print "The score is..."
