@@ -45,7 +45,7 @@ class Board(object):
         return self.board[index] == ' '
 
     def is_full(self):
-        """Return Bool indicating if token can still be placed on board"""
+        """Return Bool indicating if no more tokens can be placed"""
         return ' ' not in self.board
 
     def available_position(self):
@@ -148,7 +148,7 @@ class Game(object):
         """Initialize a new Game object"""
         self.player_token = None
         self.computer_token = None
-        self.turn = None
+        self.player_turn = None
         self.play_again = True
         self.player_score = 0
         self.tie_score = 0
@@ -196,16 +196,10 @@ class Game(object):
                     return ['O', 'X']
 
     def first_move(self):
-        """Return player that will have the first turn"""
+        """Set Boolean that determines if player make first move"""
         print "Computer will randomly decide who will make the first move..."
         sleep(Game.computer_thinking)
-        if randint(0, 1) == 0:
-            print "And the computer will go first"
-            self.turn = 'Computer'
-        else:
-            print "And you get to go first!"
-            self.turn = 'Player'
-        return self.turn
+        self.player_turn = randint(0, 1)
 
     def play(self):
         """This function structures the flow of the game"""
@@ -227,7 +221,7 @@ class Game(object):
                 self.tie_score += 1
                 break
             else:
-                if self.turn == 'Player':
+                if self.player_turn:
                     print "Players turn: ",
                     move = self.player_move(board)
                     board.make_move(move, self.player_token)
@@ -237,7 +231,7 @@ class Game(object):
                         self.player_score += 1
                         break
                     else:
-                        self.turn = 'Computer'
+                        self.player_turn = False
                 else:
                     print "Computers turn..."
                     sleep(Game.computer_thinking)
@@ -251,7 +245,7 @@ class Game(object):
                         self.ai_score += 1
                         break
                     else:
-                        self.turn = 'Player'
+                        self.player_turn = True
 
     def player_move(self, board): 
         """Return an integer if input is and int, in range and available, otherwise give feedback on valid input"""  
