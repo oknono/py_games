@@ -49,37 +49,38 @@ class Board(object):
         return ' ' not in self.board
 
     def available_position(self):
-        """return a list of all available postions on board (1-9)"""
+        """Return a list of all available postions on board (1-9)"""
         return [x + 1 for x in range(9) if self.is_valid_move(x)]
 
     def win(self, token):
-        """Return Bool indicating if there are three similar tokens in a row
-        column or diagonal"""
+        """Return Bool indicating if there are three given similar tokens
+        in a row, column or diagonal"""
         return (self.row_win(token) or self.column_win(token) or
                 self.diagonal_win(token))
 
     def row_win(self, token):
-        """Return Bool indicating if there are three similar tokens in a row"""
+        """Return Bool indicating if there are three given similar tokens
+        in a row"""
         return ((self.board[0] == self.board[1] == self.board[2] == token) or
                 (self.board[3] == self.board[4] == self.board[5] == token) or
                 (self.board[6] == self.board[7] == self.board[8] == token))
 
     def column_win(self, token):
-        """Return Bool indicating if there are three similar tokens in a
-        column"""
+        """Return Bool indicating if there are three given similar tokens
+        in a column"""
         return ((self.board[0] == self.board[3] == self.board[6] == token) or
                 (self.board[1] == self.board[4] == self.board[7] == token) or
                 (self.board[2] == self.board[5] == self.board[8] == token))
 
     def diagonal_win(self, token):
-        """Return Bool indicating if there are three similar tokens in a
-        diagonal"""
+        """Return Bool indicating if there are three given similar tokens
+        in a diagonal"""
         return ((self.board[0] == self.board[4] == self.board[8] == token) or
                 (self.board[2] == self.board[4] == self.board[6] == token))
 
 
 class AI(object):
-    """ All Functions that determine the move that will be made by computer """
+    """ All Functions that determine the best move that computer can make"""
 
     def computer_move(self, board, computer_token, player_token):
         """Return a string representing best move for computer """
@@ -91,7 +92,7 @@ class AI(object):
 
     @staticmethod
     def win_move(board, token):
-        """Return int if computer can make a winning move"""
+        """Return a string if computer can make a winning move"""
         for index in range(0, 9):
             try_board = board.get_copy_board()
             if try_board.is_valid_move(index):
@@ -101,7 +102,7 @@ class AI(object):
 
     @staticmethod
     def block_move(board, token):
-        """Return int if computer can block other player from winning"""
+        """Return a string if computer can block other player from winning"""
         for index in range(0, 9):
             try_board = board.get_copy_board()
             if try_board.is_valid_move(index):
@@ -111,7 +112,7 @@ class AI(object):
 
     @staticmethod
     def move_corner(board):
-        """Return int if there is an valid corner on the board"""
+        """Return a string if there is a valid move in a corner can be made"""
         corners = [0, 2, 6, 8]
         shuffle(corners)
         for index in corners:
@@ -120,13 +121,13 @@ class AI(object):
 
     @staticmethod
     def move_center(board):
-        """Return int if center of board is valid"""
+        """Return a string if a valid move van be made in center of the board"""
         if board.is_valid_move(4):
             return str(4)
 
     @staticmethod
     def move_side(board):
-        """Return int if there is a side of the board that is valid"""
+        """Return a string if there if a valid move can be made on a side of the board"""
         sides = [1, 3, 5, 7]
         shuffle(sides)
         for index in sides:
