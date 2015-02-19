@@ -262,15 +262,13 @@ class Game(object):
 #                print "Please enter a NUMBER!"
           
     def player_move(self, board):
-        """Return an integer if given player move is both an integer value and valid 
-        position on board, i.e. in bounds and available"""
+        """Return an integer if position is available, otherwise give feedback on available positions"""
         while True:
-            move = self.get_numerical_input()
-            if move >= 0 and move < 9 and board.is_empty(move):
-                #print "%s is a valid move" % move
+            move = self.get_correct_input()
+            if  board.is_empty(move):
                 return move
             else:
-                print "Please enter a valid number, "
+                print "That position is taken,",
                 available_postions = []
                 for n in range(9):
                     if board.is_empty(n):
@@ -278,24 +276,30 @@ class Game(object):
                 self.presentation(available_postions)
  
     @staticmethod
-    def get_numerical_input():
-        """Get input from player and return value is input is an integer """
+    def get_correct_input():
+        """Get input from player and return value is input is an integer and in range"""
         while True:
             answer = raw_input("What move do you want to make? ")
             try:
-                return int(answer) - 1
+                move = int(answer) - 1
+                if move >= 0 and move < 9:
+                    return move
+                else:
+                    print "Please enter a numerical value between 1 and 9"
             except Exception:
-                print "Please enter a numerical value (1 -9)"
+                print "Please enter a numerical value"
+
 
     @staticmethod
     def presentation(list):
         if len(list) > 1:
+            print "positions",
             for n in range(len(list)-2):
                 print str(list[n]) + ",",
             print list[- 2],
             print "and", list[-1], "are available"
         elif len(list) == 1 :
-            print list[0], "is available"  
+            print "position", list[0], "is available"  
         else:
             print "ERROR - No available elements in list"
 
