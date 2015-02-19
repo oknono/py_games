@@ -202,38 +202,42 @@ class Game(object):
     def game_play(self, board, computer):
         """Let player and computer take turns and check for winning
         or tie condition"""
-        while True:
-            while not (board.is_full() or board.win(self.computer_token) or
-                       board.win(self.player_token)):
-                if self.player_turn:
-                    print "Players turn: ",
-                    move = self.player_move(board)
-                    board.make_move(move, self.player_token)
-                    board.print_board()
-                    self.player_turn = False
-                else:
-                    print "Computers turn..."
-                    sleep(Game.computer_thinking)
-                    move = int(computer.computer_move(board,
-                                                      self.computer_token,
-                                                      self.player_token))
-                    board.make_move(move, self.computer_token)
-                    board.print_board()
-                    self.player_turn = True
-            if board.is_full():
-                print "It's a tie!"
-                self.tie_score += 1
-                break
-            elif board.win(self.computer_token):
-                print "Computer wins!"
-                self.ai_score += 1
-                break
-            elif board.win(self.player_token):
-                print "Player wins!"
-                self.player_score += 1
-                break
+        #while True:
+        while not (board.is_full() or board.win(self.computer_token) or
+                   board.win(self.player_token)):
+            if self.player_turn:
+                print "Players turn: ",
+                move = self.player_move(board)
+                board.make_move(move, self.player_token)
+                board.print_board()
+                self.player_turn = False
             else:
-                print "ERROR - this should not be printed"
+                print "Computers turn..."
+                sleep(Game.computer_thinking)
+                move = int(computer.computer_move(board,
+                                                  self.computer_token,
+                                                  self.player_token))
+                board.make_move(move, self.computer_token)
+                board.print_board()
+                self.player_turn = True
+        self.game_end(board)
+
+    def game_end(self, board):
+        """Prints end message and updates score"""
+        if board.is_full():
+            print "It's a tie!"
+            self.tie_score += 1
+            #break
+        elif board.win(self.computer_token):
+            print "Computer wins!"
+            self.ai_score += 1
+            #break
+        elif board.win(self.player_token):
+            print "Player wins!"
+            self.player_score += 1
+            #break
+        else:
+            print "ERROR - this should not be printed"
 
     def player_move(self, board):
         """Return an integer if input is and int, in range and available,
