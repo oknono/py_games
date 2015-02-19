@@ -174,14 +174,7 @@ class Game(object):
 '''
         print "But first things first..."
 
-    def set_token(self):
-        """Set and print computer and player token"""
-        self.player_token, self.computer_token = self.get_tokens()
-        print "Player is %s, computer is %s" % (self.player_token,
-                                                self.computer_token)
-
-    @staticmethod
-    def get_tokens():
+    def tokens(self):
         """Ask players what token (s)he wants to use.
         Return values of computer token and player token"""
         while True:
@@ -191,9 +184,15 @@ class Game(object):
                 print "Does not compute, please choose again"
             else:
                 if token == 'X':
-                    return ['X', 'O']
+                    self.player_token, self.computer_token = 'X', 'O'
+                    print "Player is %s, computer is %s" % (self.player_token,
+                                                            self.computer_token)
+                    break
                 else:
-                    return ['O', 'X']
+                    self.player_token, self.computer_token = 'O', 'X'
+                    print "Player is %s, computer is %s" % (self.player_token,
+                                                            self.computer_token)
+                    break
 
     def first_move(self):
         """Set Boolean that determines if player make first move"""
@@ -205,7 +204,7 @@ class Game(object):
         while self.play_again:
             ttt_board, computer = Board(), AI()
             self.print_opening()
-            self.set_token()
+            self.tokens()
             self.first_move()
             self.game_play(ttt_board, computer)
             self.score()
