@@ -82,7 +82,7 @@ class AI(object):
     """ All Functions that determine the move that will be made by computer """
 
     def computer_move(self, board, computer_token, player_token):
-        """Return a int representing best move for computer """
+        """Return a string representing best move for computer """
         return (self.win_move(board, computer_token) or
                 self.block_move(board, player_token) or
                 self.move_corner(board) or
@@ -206,6 +206,7 @@ class Game(object):
             else:
                 print "Computers turn..."
                 sleep(Game.computer_thinking)
+                #computer move returns string to deal with 0 values
                 move = int(computer.computer_move(board,
                                                   self.computer_token,
                                                   self.player_token))
