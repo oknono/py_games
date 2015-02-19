@@ -160,7 +160,7 @@ class Game(object):
         print "\nLet's play Tic Tac Toe!\n"
         print "To play, please enter number 1 - 9 (see the illustration below)"
         example_board = Board([n for n in range(1, 10)])
-        example_board.print_board()       
+        example_board.print_board()
         print "But first things first..."
 
     def tokens(self):
@@ -174,13 +174,13 @@ class Game(object):
             else:
                 if token == 'X':
                     self.player_token, self.computer_token = 'X', 'O'
-                    print "Player is %s, computer is %s" % (self.player_token,
-                                                            self.computer_token)
+                    print "Player is %s, computer is %s"
+                    % (self.player_token, self.computer_token)
                     break
                 else:
                     self.player_token, self.computer_token = 'O', 'X'
-                    print "Player is %s, computer is %s" % (self.player_token,
-                                                            self.computer_token)
+                    print "Player is %s, computer is %s"
+                    % (self.player_token, self.computer_token)
                     break
 
     def first_move(self):
@@ -203,13 +203,14 @@ class Game(object):
         """Let player and computer take turns and check for winning
         or tie condition"""
         while True:
-            while not (board.is_full() or board.win(self.computer_token) or board.win(self.player_token)):
+            while not (board.is_full() or board.win(self.computer_token) or
+                       board.win(self.player_token)):
                 if self.player_turn:
                     print "Players turn: ",
                     move = self.player_move(board)
                     board.make_move(move, self.player_token)
                     board.print_board()
-                    self.player_turn = False 
+                    self.player_turn = False
                 else:
                     print "Computers turn..."
                     sleep(Game.computer_thinking)
@@ -232,10 +233,11 @@ class Game(object):
                 self.player_score += 1
                 break
             else:
-                print "ERROR - this should not be printed"   
+                print "ERROR - this should not be printed"
 
-    def player_move(self, board): 
-        """Return an integer if input is and int, in range and available, otherwise give feedback on valid input"""  
+    def player_move(self, board):
+        """Return an integer if input is and int, in range and available,
+        otherwise give feedback on valid input"""
         while True:
             answer = raw_input("What move do you want to make? ")
             try:
@@ -246,7 +248,7 @@ class Game(object):
                     self.input_feedback(board)
             except Exception:
                 self.input_feedback(board)
-    
+
     @staticmethod
     def in_range(move):
         """Return Bool if move is in range (0-8)"""
@@ -263,11 +265,11 @@ class Game(object):
                 print str(open_position[n]) + ",",
             print open_position[- 2],
             print "and", open_position[-1], "are available"
-        elif len(open_position) == 1 :
-            print "position", open_position[0], "is available"  
+        elif len(open_position) == 1:
+            print "position", open_position[0], "is available"
         else:
             print "ERROR - No available elements in list"
-    
+
     def score(self):
         """Print the current score"""
         print "The score is..."
