@@ -51,9 +51,9 @@ class Board(object):
     def available_position(self):
         """return a list of all available postions on board (1-9)"""
         positions = []
-        for n in range(9):
-            if self.is_valid_move(n):
-                positions.append(n + 1)
+        for index in range(9):
+            if self.is_valid_move(index):
+                positions.append(index + 1)
         return positions
 
     def win(self, token):
@@ -261,8 +261,8 @@ class Game(object):
         open_position = board.available_position()
         if len(open_position) > 1:
             print "positions",
-            for n in range(len(open_position)-2):
-                print str(open_position[n]) + ",",
+            for index in range(len(open_position)-2):
+                print str(open_position[index]) + ",",
             print open_position[- 2],
             print "and", open_position[-1], "are available"
         elif len(open_position) == 1:
