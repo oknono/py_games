@@ -250,7 +250,7 @@ class Game(object):
                     return move
                 else:
                     self.input_feedback(board)
-            except Exception:
+            except ValueError:
                 self.input_feedback(board)
 
     @staticmethod
