@@ -245,21 +245,59 @@ class Game(object):
                     else:
                         self.turn = 'Player'
 
-    @staticmethod
-    def player_move(board):
-        """Ask input from player, return an integer"""
+#    @staticmethod
+#    def player_move(board):
+#        """Ask input from player, return an integer"""
+#        while True:
+#            move = raw_input("What move do you want to make? ")
+#            if move.isdigit():
+#                move = int(move)
+#                if move > 0 and move < 10 and board.is_empty(move-1):
+#                    return move - 1
+#                elif move < 0 or move >= 10:
+#                    print "That number is off the charts! Try again!"
+#                else:
+#                    print "That position is already taken! Try again!"
+#            else:
+#                print "Please enter a NUMBER!"
+          
+    def player_move(self, board):
+        """Return an integer if given player move is both an integer value and valid 
+        position on board, i.e. in bounds and available"""
         while True:
-            move = raw_input("What move do you want to make? ")
-            if move.isdigit():
-                move = int(move)
-                if move > 0 and move < 10 and board.is_empty(move-1):
-                    return move - 1
-                elif move < 0 or move >= 10:
-                    print "That number is off the charts! Try again!"
-                else:
-                    print "That position is already taken! Try again!"
+            move = self.get_numerical_input()
+            if move >= 0 and move < 9 and board.is_empty(move):
+                #print "%s is a valid move" % move
+                return move
             else:
-                print "Please enter a NUMBER!"
+                print "Please enter a valid number, "
+                available_postions = []
+                for n in range(9):
+                    if board.is_empty(n):
+                        available_postions.append(n + 1)
+                self.presentation(available_postions)
+ 
+    @staticmethod
+    def get_numerical_input():
+        """Get input from player and return value is input is an integer """
+        while True:
+            answer = raw_input("What move do you want to make? ")
+            try:
+                return int(answer) - 1
+            except Exception:
+                print "Please enter a numerical value (1 -9)"
+
+    @staticmethod
+    def presentation(list):
+        if len(list) > 1:
+            for n in range(len(list)-2):
+                print str(list[n]) + ",",
+            print list[- 2],
+            print "and", list[-1], "are available"
+        elif len(list) == 1 :
+            print list[0], "is available"  
+        else:
+            print "ERROR - No available elements in list"
 
     def score(self):
         """Print the current score"""
