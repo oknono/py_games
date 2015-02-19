@@ -311,7 +311,7 @@ class Game(object):
         print "Ties: " + str(self.tie_score)
 
     def again(self):
-        """Return Bool based on user input - continue or break game loop"""
+        """Return Bool based on user input - new game or quit game"""
         self.play_again = raw_input("Do you want to play again?"
                                     "(Y)es/(N)o: ").lower().startswith('y')
         if self.play_again:
