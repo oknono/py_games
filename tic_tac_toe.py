@@ -48,6 +48,14 @@ class Board(object):
         """Return Bool indicating if token can still be placed on board"""
         return ' ' not in self.board
 
+    def available_position(self):
+        """return a list of all available postions on board (1-9)"""
+        positions = []
+        for n in range(9):
+            if self.is_empty(n):
+                positions.append(n + 1)
+        return positions
+
     def win(self, token):
         """Return Bool indicating if there are three similar tokens in a row
         column or diagonal"""
@@ -245,63 +253,41 @@ class Game(object):
                     else:
                         self.turn = 'Player'
 
-#    @staticmethod
-#    def player_move(board):
-#        """Ask input from player, return an integer"""
-#        while True:
-#            move = raw_input("What move do you want to make? ")
-#            if move.isdigit():
-#                move = int(move)
-#                if move > 0 and move < 10 and board.is_empty(move-1):
-#                    return move - 1
-#                elif move < 0 or move >= 10:
-#                    print "That number is off the charts! Try again!"
-#                else:
-#                    print "That position is already taken! Try again!"
-#            else:
-#                print "Please enter a NUMBER!"
-          
-    def player_move(self, board):
-        """Return an integer if position is available, otherwise give feedback on available positions"""
-        while True:
-            move = self.get_correct_input()
-            if  board.is_empty(move):
-                return move
-            else:
-                print "That position is taken,",
-                available_postions = []
-                for n in range(9):
-                    if board.is_empty(n):
-                        available_postions.append(n + 1)
-                self.presentation(available_postions)
- 
-    @staticmethod
-    def get_correct_input():
-        """Return int, based on input from player and if input is an integer and in range of permitted values"""
+    def player_move(self, board): 
+        """Return an integer if input is and int, in range and available, otherwise give feedback on valid input"""  
         while True:
             answer = raw_input("What move do you want to make? ")
             try:
                 move = int(answer) - 1
-                if move >= 0 and move < 9:
+                if self.in_range(move) and board.is_empty(move):
                     return move
                 else:
-                    print "Please enter a numerical value between 1 and 9"
+                    self.input_feedback(board)
             except Exception:
-                print "Please enter a numerical value"
+                self.input_feedback(board)
+    
+    @staticmethod
+    def in_range(move):
+        """Return Bool if move is in range (0-8)"""
+        return move >= 0 and move < 9
 
     @staticmethod
-    def presentation(list):
-        """Print the contents of a list depending on length (1 or >1)"""
-        if len(list) > 1:
+    def input_feedback(board):
+        """Print feedback on move that is incorrect or invalid"""
+        print "Please enter a valid move:",
+        open_position = board.available_position()
+        if len(open_position) > 1:
             print "positions",
-            for n in range(len(list)-2):
-                print str(list[n]) + ",",
-            print list[- 2],
-            print "and", list[-1], "are available"
-        elif len(list) == 1 :
-            print "position", list[0], "is available"  
+            for n in range(len(open_position)-2):
+                print str(open_position[n]) + ",",
+            print open_position[- 2],
+            print "and", open_position[-1], "are available"
+        elif len(open_position) == 1 :
+            print "position", open_position[0], "is available"  
         else:
             print "ERROR - No available elements in list"
+
+    
 
     def score(self):
         """Print the current score"""
