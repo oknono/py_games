@@ -51,11 +51,6 @@ class Board(object):
     def available_position(self):
         """return a list of all available postions on board (1-9)"""
         return [x + 1 for x in range(9) if self.is_valid_move(x)]
-        #positions = []
-        #for index in range(9):
-        #    if self.is_valid_move(index):
-        #        positions.append(index + 1)
-        #return positions
 
     def win(self, token):
         """Return Bool indicating if there are three similar tokens in a row
