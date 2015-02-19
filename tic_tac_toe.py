@@ -174,13 +174,13 @@ class Game(object):
             else:
                 if token == 'X':
                     self.player_token, self.computer_token = 'X', 'O'
-                    print "Player is %s, computer is %s"
-                    % (self.player_token, self.computer_token)
+                    print "Player is %s, computer is %s" % (self.player_token,
+                                                            self.computer_token)
                     break
                 else:
                     self.player_token, self.computer_token = 'O', 'X'
-                    print "Player is %s, computer is %s"
-                    % (self.player_token, self.computer_token)
+                    print "Player is %s, computer is %s" % (self.player_token,
+                                                            self.computer_token)
                     break
 
     def first_move(self):
