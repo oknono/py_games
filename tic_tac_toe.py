@@ -12,7 +12,7 @@ class Board(object):
     i.e create, print, update, copy and check a Board"""
 
     def __init__(self, board):
-        """Initialize a new Board object"""
+        """Initialize a new Board object, takes a list as parameter"""
         self.board = board
 
     def print_board(self):
@@ -200,9 +200,7 @@ class Game(object):
             self.again()
 
     def game_play(self, board, computer):
-        """Let player and computer take turns and check for winning
-        or tie condition"""
-        #while True:
+        """Let player and computer take turns until an end condition occurs(win or tie)"""
         while not (board.is_full() or board.win(self.computer_token) or
                    board.win(self.player_token)):
             if self.player_turn:
