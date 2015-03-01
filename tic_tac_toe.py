@@ -84,6 +84,7 @@ class AI(object):
 
     def computer_move(self, board, computer_token, player_token):
         """Return a string representing best move for computer """
+        # Computer move returns string to deal with 0 values
         return (self.win_move(board, computer_token) or
                 self.block_move(board, player_token) or
                 self.move_corner(board) or
@@ -121,13 +122,15 @@ class AI(object):
 
     @staticmethod
     def move_center(board):
-        """Return a string if a valid move can be made in the center of the board"""
+        """Return a string if a valid move can be made in the center
+        of the board"""
         if board.is_valid_move(4):
             return str(4)
 
     @staticmethod
     def move_side(board):
-        """Return a string if there if a valid move can be made on a side of the board"""
+        """Return a string if there if a valid move can be made on
+        a side of the board"""
         sides = [1, 3, 5, 7]
         shuffle(sides)
         for index in sides:
@@ -151,11 +154,22 @@ class Game(object):
         self.tie_score = 0
         self.ai_score = 0
 
+    def play(self):
+        """This function structures the flow of the game"""
+        while self.play_again:
+            ttt_board, computer = Board([' '] * 9), AI()
+            self.print_opening()
+            self.tokens()
+            self.first_move()
+            self.game_play(ttt_board, computer)
+            self.score()
+            self.again()
+
     @staticmethod
     def print_opening():
         """Print an instruction on how to play the game"""
-        print "\nHey Ho, Come on and let's play Tic Tac Toe!\n"
-        print "To play and have a good time, please enter number 1 - 9"
+        print "\nLet's play Tic Tac Toe!\n"
+        print "Please enter number 1 - 9 to make a move"
         example_board = Board([n for n in range(1, 10)])
         example_board.print_board()
         print "There's one thing I need to know..."
@@ -183,19 +197,9 @@ class Game(object):
         print "Computer will randomly decide who will make the first move..."
         self.player_turn = randint(0, 1)
 
-    def play(self):
-        """This function structures the flow of the game"""
-        while self.play_again:
-            ttt_board, computer = Board([' '] * 9), AI()
-            self.print_opening()
-            self.tokens()
-            self.first_move()
-            self.game_play(ttt_board, computer)
-            self.score()
-            self.again()
-
     def game_play(self, board, computer):
-        """Let player and computer take turns until an end condition occurs(win or tie)"""
+        """Let player and computer take turns until an end condition
+        occurs(win or tie)"""
         while not (board.is_full() or board.win(self.computer_token) or
                    board.win(self.player_token)):
             if self.player_turn:
@@ -207,7 +211,6 @@ class Game(object):
             else:
                 print "Computers turn..."
                 sleep(Game.computer_thinking)
-                #computer move returns string to deal with 0 values
                 move = int(computer.computer_move(board,
                                                   self.computer_token,
                                                   self.player_token))
@@ -219,19 +222,17 @@ class Game(object):
     def game_end(self, board):
         """Prints end message and updates score"""
         if board.is_full():
-            print "My my my, It's a tie!"
+            print "It's a tie!"
             self.tie_score += 1
         elif board.win(self.computer_token):
             print "Computer wins!"
             self.ai_score += 1
-        elif board.win(self.player_token):
+        else:
             print "Player wins!"
             self.player_score += 1
-        else:
-            print "ERROR - this should not be printed"
 
     def player_move(self, board):
-        """Return an integer if input is and int, in range and available,
+        """Return an integer if input is an integer represents available position,
         otherwise give feedback on valid input"""
         while True:
             answer = raw_input("What move do you want to make? ")
@@ -263,7 +264,7 @@ class Game(object):
         elif len(open_position) == 1:
             print "position", open_position[0], "is available"
         else:
-            print "ERROR - No available elements in list"
+            print "Empty list"
 
     def score(self):
         """Print the current score"""
