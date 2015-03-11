@@ -158,6 +158,7 @@ class Game(object):
         """This function structures the flow of the game"""
         while self.play_again:
             ttt_board, computer = Board([' '] * 9), AI()
+            #ttt_board, computer = Board(['X','O','X','O','X','O','O','O',' ']), AI()
             self.print_opening()
             self.tokens()
             self.first_move()
@@ -221,15 +222,15 @@ class Game(object):
 
     def game_end(self, board):
         """Prints end message and updates score"""
-        if board.is_full():
-            print "It's a tie!"
-            self.tie_score += 1
-        elif board.win(self.computer_token):
+        if board.win(self.computer_token):
             print "Computer wins!"
             self.ai_score += 1
-        else:
+        elif board.win(self.player_token):
             print "Player wins!"
             self.player_score += 1
+        else:
+            print "It's a tie!"
+            self.tie_score += 1
 
     def player_move(self, board):
         """Return an integer if input is an integer represents available position,
